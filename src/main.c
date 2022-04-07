@@ -95,6 +95,9 @@ void main(void){
 void inicioSesion(){
 
 	int correcto;
+	int intento;
+	int logeoExitoso;
+
 
 	char *nombreUsuario;
 	char *password;
@@ -114,6 +117,7 @@ void inicioSesion(){
 		
 		if (login(nombreUsuario, password)) {
 			correcto = 1;
+			
 		} else {
 			printf("\n\n\t\tUsuario y/o password incorrectos");
 			intento++;
@@ -121,7 +125,7 @@ void inicioSesion(){
 		}
 	} while (intento < 4 && correcto == 0);
 
-	if (loginExitoso == 1) {
+	if (logeoExitoso == 1) {
 		
 		
 	} else {
@@ -133,10 +137,12 @@ void inicioSesion(){
 char login(char nom_user[], char pass_user[]) {
 	FILE *archivo;
 	int correcto;
+	int logeoExitoso;
 	Usuario usuario;
 
-	archivo = fopen(ARCHIVO_USUARIOS, "rb");
+	archivo = fopen("AÑADIR_NOMBRE_ARCHIVO", "rb");
 
+	//Creo que hay que añadir un input, de usuario y contraseña y pasar las variables ahi.
 	if (archivo == NULL) {
 		logeoExitoso = 0;
 
@@ -144,7 +150,7 @@ char login(char nom_user[], char pass_user[]) {
 		correcto = 0;
 		fread(&usuario, sizeof(usuario), 1, archivo);
 		while (!feof(archivo)) {
-			if (strcmp(usuario.nombre, nombreUsuario) == 0 && strcmp(usuario.password, password) == 0) {
+			if (strcmp(usuario.nom_user, 'nombreUsuario') == 0 && strcmp(usuario.pass_user, 'password') == 0) {
 				
 				correcto = 1;
 				break;
@@ -156,4 +162,5 @@ char login(char nom_user[], char pass_user[]) {
 	}
 
 	return correcto;
+	//yer
 }
