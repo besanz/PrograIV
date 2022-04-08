@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "estructuras.h": "c",
+        "sqlite3.h": "c",
+        "conexionbd.h": "c"
+    }
+}
