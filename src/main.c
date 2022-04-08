@@ -94,7 +94,9 @@ void main(void){
 }
 void inicioSesion(){
 
-	int correcto;
+	int correcto = 0;
+	int intento = 0;
+	
 
 	char *nombreUsuario;
 	char *password;
@@ -121,8 +123,8 @@ void inicioSesion(){
 		}
 	} while (intento < 4 && correcto == 0);
 
-	if (loginExitoso == 1) {
-		
+	if (correcto == 1) {
+		printf("\nBienvenido %s", //nomuser);
 		
 	} else {
 		printf("\n\tHa sobrepasado el numero maximo de intentos permitidos\n");
@@ -135,16 +137,16 @@ char login(char nom_user[], char pass_user[]) {
 	int correcto;
 	Usuario usuario;
 
-	archivo = fopen(ARCHIVO_USUARIOS, "rb");
+	archivo = fopen(basedatos, "rb");
 
 	if (archivo == NULL) {
-		logeoExitoso = 0;
+		correcto = 0;
 
 	} else {
 		correcto = 0;
 		fread(&usuario, sizeof(usuario), 1, archivo);
 		while (!feof(archivo)) {
-			if (strcmp(usuario.nombre, nombreUsuario) == 0 && strcmp(usuario.password, password) == 0) {
+			if (strcmp(usuario.nom_user, nombreUsuario) == 0 && strcmp(usuario.pass_user, password) == 0) {
 				
 				correcto = 1;
 				break;
