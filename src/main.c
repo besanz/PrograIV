@@ -51,16 +51,8 @@ void main(void){
 }
 void inicioSesion(){
 
-<<<<<<< HEAD
 	int correcto = 0;
 	int intento = 0;
-	
-=======
-	int correcto;
-	int intento;
-	int logeoExitoso;
-
->>>>>>> d2647fec1ad045a7dce578f40cdea44b131a574e
 
 	char *nombreUsuario;
 	char *password;
@@ -138,5 +130,5 @@ char login(char nom_user[], char pass_user[]) {
 	}
 
 	return correcto;
-	//yer
+	
 }
