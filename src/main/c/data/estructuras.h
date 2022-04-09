@@ -38,7 +38,8 @@ typedef struct{
 typedef struct{
 	int cod_dj;
 	char *nom_dj;
-	char *Genero;
+	char *genero;
+	char *info_dj;
 }Dj;
 
 typedef struct{

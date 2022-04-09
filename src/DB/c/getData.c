@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../Programacion4/PrograIV/src/DB/getData.h"
-#include "../../Programacion4/PrograIV/src/DB/conexionBD.h"
 #include "../../lib/sqlite3/sqlite3.h"
-#include "../../Programacion4/PrograIV/src/estructuras.h"
-#include "../../Programacion4/PrograIV/src/estructuras1.1.h"
+#include "../../src/main/c/data/estructuras.h"
+#include "../../db/c/getData.h"
+
 int numFilas = 1;
 
 int getLogin(char *id, char *contrasenya, int userType) 
@@ -69,9 +68,10 @@ Dj *getinfoDj(int cod_dj){
 
         strcpy(djbase->nom_dj, (const char *)sqlite3_column_text(res, 1));
         djbase->cod_dj = sqlite3_column_int(res, 0);
-        strcpy(djbase->info_dj->nom_gen, (const char *)sqlite3_column_text(res, 1));
-        
-        
+
+        //strcpy(djbase->info_dj->nom_gen, (const char *)sqlite3_column_text(res, 1));
+        //Revisar esta linea. 
+              
         
     }
 

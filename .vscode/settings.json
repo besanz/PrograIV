@@ -3,7 +3,8 @@
         "stdlib.h": "c",
         "estructuras.h": "c",
         "sqlite3.h": "c",
-        "conexionbd.h": "c"
+        "conexionbd.h": "c",
+        "connect.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
