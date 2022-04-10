@@ -4,7 +4,9 @@
         "estructuras.h": "c",
         "sqlite3.h": "c",
         "conexionbd.h": "c",
-        "connect.h": "c"
+        "connect.h": "c",
+        "getdata.h": "c",
+        "string.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

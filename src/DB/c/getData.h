@@ -1,6 +1,6 @@
 #ifndef getData
 #define getData
-#include "../../src/main/c/data/estructuras.h"
+#include "../../src/main/c/estructuras.h"
 #include "../../src/db/connect/connect.h"
 #include "../../lib/sqlite3/sqlite3.h"
 

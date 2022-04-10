@@ -34,18 +34,16 @@ typedef struct{
 	int gen_zona;
 	int fest_zona
 }Zona;
-
-typedef struct{
-	int cod_dj;
-	char *nom_dj;
-	char *genero;
-	char *info_dj;
-}Dj;
-
 typedef struct{
 	int cod_gen;
 	char *nom_gen;
 }Genero;
+
+typedef struct{
+	int cod_dj;
+	char *nom_dj;
+	char* genero;
+}Dj;
 
 
 
