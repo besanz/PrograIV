@@ -81,15 +81,24 @@ void inicioSesion(){
 
 int login(char id_user[], char pass_user[]) {
 	
+	char *nombreUsuario;
+	char *password;
 	int correcto;
 	int logeoExitoso;
 	Usuario usuario;
 
 	correcto = 0;
+
+	printf("INICIAR SESION\n");
+	printf("Usuario:\n");
+	scanf(*nombreUsuario);
+	printf("Password:\n");
+	scanf(*password);
 	
-	if (strcmp(usuario.nom_user, 'nombreUsuario') == 0 && strcmp(usuario.pass_user, 'password') == 0) {			
+	if (strcmp(usuario.nom_user, &nombreUsuario) == 0 && strcmp(usuario.pass_user, &password) == 0) {			
 		correcto = 1;         
     }
+	printf("Logueo exitoso!");
 	return correcto;	
 }
 
@@ -140,17 +149,20 @@ int menuSeleccionFestival()
 
 void menuEntradas()
 {
-    char *input;
-    input=malloc(sizeof(char));
-    printf(   
-        "Elige un festival : \n"
-        "1.- Entrada VIP: \n"
-        "2.- Entrada Normal:  \n"
-        "3.- Entrada especial Reggaeton:\n"
-        "4.- Entrada para Raperos:\n"
-        "5.- Entrada para traperos:\n"
-        "6.- Entrada BackStage:\n"
-        "7.- Entrada AllIncluded:\n"
-        "q.- Cerrar\n\n"
-        "Inserte seleccion: " );
-} 
+	
+		char *input;
+		input=malloc(sizeof(char));
+		printf(   
+			"Elige un festival : \n"
+			"1.- Entrada VIP: \n"
+			"2.- Entrada Normal:  \n"
+			"3.- Entrada especial Reggaeton:\n"
+			"4.- Entrada para Raperos:\n"
+			"5.- Entrada para traperos:\n"
+			"6.- Entrada BackStage:\n"
+			"7.- Entrada AllIncluded:\n"
+			"q.- Cerrar\n\n"
+			"Inserte seleccion: " );
+	
+}
+ 
