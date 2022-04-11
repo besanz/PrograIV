@@ -88,7 +88,7 @@ Zona *getinfoZona(int cod_zona){
 }
 Usuario *getUsuario(char *id_user) 
 {
-    
+    startConn();
     
     int rc;
     char *err_msg = 0;
