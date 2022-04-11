@@ -4,5 +4,6 @@
 
 
 int insertUsuario(Usuario usuario);
+int modificarUsuario(char *elig, Usuario *usuario,char *input);
 
 #endif
