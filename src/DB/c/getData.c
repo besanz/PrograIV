@@ -89,6 +89,7 @@ Zona *getinfoZona(int cod_zona){
 Usuario *getUsuario(char *id_user) 
 {
     
+    
     int rc;
     char *err_msg = 0;
     sqlite3_stmt *res;
