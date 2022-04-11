@@ -18,8 +18,4 @@ Usuario *getUsuario(char *id_user);
 
 Festival *getFestival(char *nom_fest);
 
-
-
-
-
 #endif 

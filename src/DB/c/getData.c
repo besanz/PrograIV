@@ -4,11 +4,8 @@
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../../main/c/estructuras.h"
 #include "../../db/c/getData.h"
+#include "../connect/connect.h"
 #define MAX 40;
-
-int numFilas = 1;
-
-
 
 Entrada *getinfoEnt(int cod_ent){
     int rc;
@@ -82,10 +79,8 @@ Zona *getinfoZona(int cod_zona){
     {
         zona->nom_zona=(char*)malloc((strlen(sqlite3_column_text(res,1))+1)*(sizeof(char)));
         zona->nom_zona=strcpy(zona->nom_zona, (const char *)sqlite3_column_text(res, 1));
-        zona->nom_zona[(strlen(sqlite3_column_text(res,1)))]='\0';
-              
+        zona->nom_zona[(strlen(sqlite3_column_text(res,1)))]='\0';   
     }
-    
     
 
     return zona;
@@ -119,8 +114,6 @@ Usuario *getUsuario(char *id_user)
     if (step == SQLITE_ROW)
 
     {
-
-        
         usu->id_user=(char*)malloc((strlen(sqlite3_column_text(res,0))+1)*sizeof(char));
         usu->id_user=strcpy(usu->id_user, (const char *)sqlite3_column_text(res, 0));
         usu->id_user[(strlen(sqlite3_column_text(res,0)))]='\0';
@@ -134,14 +127,10 @@ Usuario *getUsuario(char *id_user)
         usu->pass_user[(strlen(sqlite3_column_text(res,2)))]='\0';
 
         usu->ent_fest= sqlite3_column_int(res, 3);
-        
     }
-    else{}
-    
 
     return usu;
     free(usu);
-
 
 }
 
@@ -193,7 +182,8 @@ Festival *getFestival(char *nom_fest)
 
 
 }
-Usuario **getListUsuarios(char *id_user) 
+/**
+Usuario **getListaUsuarios(char *id_user) 
 {
     
     int rc, rc1;
@@ -254,6 +244,8 @@ Usuario **getListUsuarios(char *id_user)
     return listaUsu;
     
 }
+**/
+
 Dj *getinfoDj(int cod_dj){
     int rc;
     char *err_msg = 0;
@@ -280,13 +272,10 @@ Dj *getinfoDj(int cod_dj){
     {
 
         djbase->cod_dj= sqlite3_column_int(res, 0);
-
         djbase->nom_dj=(char*)malloc((strlen(sqlite3_column_text(res,1))+1)*sizeof(char));
         djbase->nom_dj=strcpy(djbase->nom_dj, (const char *)sqlite3_column_text(res, 1));
         djbase->nom_dj[(strlen(sqlite3_column_text(res,1)))]='\0';
-        djbase->gen_dj= sqlite3_column_int(res, 0);
-
-        
+        djbase->gen_dj= sqlite3_column_int(res, 0);    
         
     }
 

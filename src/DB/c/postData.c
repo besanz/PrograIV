@@ -1,7 +1,10 @@
+/**
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../../lib/sqlite3/sqlite3.h"
+#include "../../main/c/estructuras.h"
 #include "postData.h"
 #include "../connect/connect.h"
 
@@ -43,9 +46,9 @@ int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		return result;
 	}
 	return SQLITE_OK;
-    closeConn();
+
 }
-int modificarUsuario(char *elig, Usuario *usuario,char *input)
+int modificarUsuario(char *elig, Usuario *usuario, char *input)
 {
 
 	 int rc;
@@ -53,7 +56,7 @@ int modificarUsuario(char *elig, Usuario *usuario,char *input)
     sqlite3_stmt *res;
 
     char *sql;
-    char *sql1 = "UPDATE Usuario SET ent_fes = ? WHERE nom_user = ?";
+    char *sql1 = "UPDATE Usuario SET ent_fest = ? WHERE nom_user = ?";
     
 
     switch (*elig)
@@ -82,4 +85,4 @@ int modificarUsuario(char *elig, Usuario *usuario,char *input)
 
     return step;
 }
-
+**/
