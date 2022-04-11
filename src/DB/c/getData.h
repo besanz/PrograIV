@@ -1,8 +1,8 @@
 #ifndef getData
 #define getData
-#include "../../src/main/c/estructuras.h"
-#include "../../src/db/connect/connect.h"
-#include "../../lib/sqlite3/sqlite3.h"
+#include "../../main/c/estructuras.h"
+#include "../../../lib/sqlite3/sqlite3.h"
+#include "../connect/connect.h"
 
 extern int numFilas;
 

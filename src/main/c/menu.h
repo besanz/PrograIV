@@ -1,6 +1,6 @@
-#ifndef MENU_H
-#define MENU_H
-#include "../../main/c/main.c"
+#ifndef _MENU_H_
+#define _MENU_H_
+#include "../../main/c/menu.c"
 
 //Gestionar el inicio de sesion
 void inicioSesion();

@@ -1,5 +1,5 @@
-#ifndef ESTRUCTURAS_H
-#define ESTRUCTURAS_H
+#ifndef _ESTRUCTURAS_H_
+#define _ESTRUCTURAS_H_
 
 
 typedef struct{
@@ -31,8 +31,8 @@ typedef struct{
 typedef struct{
 	int cod_zona;
 	char* nom_zona;
-	int gen_zona;
-	int fest_zona
+	char* gen_zona;
+	int fest_zona;
 }Zona;
 typedef struct{
 	int cod_gen;

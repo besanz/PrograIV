@@ -1,5 +1,6 @@
 #include "../../main/c/estructuras.h"
 #include "../../db/c/getData.h"
+#include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -107,7 +108,7 @@ int menuSeleccionFestival()
 {
     char *input;
     input=malloc(sizeof(char));
-    int festSeleccionado;
+
 
     do{
             printf(   
@@ -125,19 +126,19 @@ int menuSeleccionFestival()
         switch (*input)
         {
         case '1':
-          festSeleccionado = 1; 
+          
           break;
         case '2':
-          festSeleccionado = 2;
+        
           break; 
          case '3':
-          festSeleccionado = 3;
+        
           break;
          case '4':
-          festSeleccionado = 4;
+        
           break;
          case '5':
-          festSeleccionado = 5;
+          
           break;
         default:
             printf("\nIntroduce una opcion valida, por favor.\n\n");
@@ -147,13 +148,48 @@ int menuSeleccionFestival()
     free(input);
 }
 
-void menuEntradas()
+int menudentroFestival()
 {
-	
-		char *input;
-		input=malloc(sizeof(char));
-		printf(   
-			"Elige un festival : \n"
+    char *input;
+    input=malloc(sizeof(char));
+    
+
+    do{
+            printf(   
+               
+         "1.- Ver info festival: \n"
+         "2.- Ver info entradas:  \n"
+         "q.- Cerrar\n\n"
+         "\t\tIngrese una opcion: [ ]\b\b");
+        fgets(input, 2, stdin);
+        sscanf(input, "%c", input);
+        fflush(stdin);
+        switch (*input)
+        {
+        case '1':
+          
+          break;
+        case '2':
+        
+          break; 
+        default:
+            printf("\nIntroduce una opcion valida, por favor.\n\n");
+            break;
+        }
+      }  while (*input != 'q');
+    free(input);
+}
+
+int menuEntradas()
+{
+    char *input;
+    input=malloc(sizeof(char));
+    
+
+    do{
+            printf(   
+               
+        	"Elige una entrada : \n"
 			"1.- Entrada VIP: \n"
 			"2.- Entrada Normal:  \n"
 			"3.- Entrada especial Reggaeton:\n"
@@ -162,7 +198,40 @@ void menuEntradas()
 			"6.- Entrada BackStage:\n"
 			"7.- Entrada AllIncluded:\n"
 			"q.- Cerrar\n\n"
-			"Inserte seleccion: " );
-	
+      
+         "\t\tIngrese una opcion: [ ]\b\b");
+        fgets(input, 7, stdin);
+        sscanf(input, "%c", input);
+        fflush(stdin);
+        switch (*input)
+        {
+        case '1':
+          
+          break;
+        case '2':
+        
+          break; 
+		  case '3':
+        
+          break; 
+		  case '4':
+        
+          break; 
+		  case '5':
+        
+          break; 
+		  case '6':
+        
+          break; 
+		  case '7':
+        
+          break; 
+		 
+        default:
+            printf("\nIntroduce una opcion valida, por favor.\n\n");
+            break;
+        }
+      }  while (*input != 'q');
+    free(input);
 }
- 
+

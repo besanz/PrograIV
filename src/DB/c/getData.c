@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../lib/sqlite3/sqlite3.h"
-#include "../../src/main/c/estructuras.h"
+#include "../../../lib/sqlite3/sqlite3.h"
+#include "../../main/c/estructuras.h"
 #include "../../db/c/getData.h"
 #define MAX 40;
 
