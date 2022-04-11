@@ -16,7 +16,7 @@ typedef struct{
 }Entrada;
 
 typedef struct{
-	int id_user;
+	char *id_user;
 	char *nom_user;
 	char *pass_user;
 	int ent_fest;
@@ -28,12 +28,7 @@ typedef struct{
 	int fest_foro;
 }Foro;
 
-typedef struct{
-	int cod_zona;
-	char* nom_zona;
-	char* gen_zona;
-	int fest_zona;
-}Zona;
+
 typedef struct{
 	int cod_gen;
 	char *nom_gen;
@@ -42,9 +37,13 @@ typedef struct{
 typedef struct{
 	int cod_dj;
 	char *nom_dj;
-	char* genero;
+	int gen_dj;
 }Dj;
-
-
+typedef struct{
+	int cod_zona;
+	char* nom_zona;
+	Genero gen_zona;
+	int fest_zona;
+}Zona;
 
 #endif

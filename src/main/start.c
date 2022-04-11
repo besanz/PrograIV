@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/main/c/menu.h"
+#include "c/menu.h"
 
-void main(){
+void main(void){
     menuInicial();
 }

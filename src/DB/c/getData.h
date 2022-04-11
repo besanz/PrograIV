@@ -6,8 +6,20 @@
 
 extern int numFilas;
 
-int getLogin(char *email, char *contrasenya, int userType);
+int getLogin(char *id, char *contrasenya, int userType);
+
 Dj *getinfoDj(int cod_dj);
+
+Entrada *getinfoEnt(int cod_ent);
+
+Zona *getinfoZona(int cod_zona);
+
+Usuario *getUsuario(char *id_user);
+
+Festival *getFestival(char *nom_fest);
+
+
+
 
 
 #endif 
