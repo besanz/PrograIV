@@ -68,24 +68,19 @@ void inicioSesion(){
 
 		usu = getUsuario(nombreUsuario);
 		
-		if(strcmp(usu->id_user, nombreUsuario) == 0 && strcmp(usu->pass_user, password) == 0){
+		if(comprobarUsuario(nombreUsuario, password) == 1){
+      system("cls");
+			menuSeleccionFestival(usu);
 			
-			
-			correcto=1;
-			intento=intento+1;
-		}
+		}else{
+      break;
+      intento=intento+1;
+      printf("Incorrecto");
+      inicioSesion();
+    }
 		
 	} while (intento < 4 && correcto == 0);
 
-	if (correcto == 1) 
-	{
-		menuSeleccionFestival(usu);
-		
-	} 
-	else {
-		printf("\n\tHa sobrepasado el numero maximo de intentos permitidos\n");
-		
-	}
 }
 
 void registrarUsuario(){
@@ -119,7 +114,7 @@ void menuSeleccionFestival(Usuario *u)
 
 
     do{
-            printf("\n---------------------Bienvenido %s! ----------------------------------\n"   
+            printf("\n---------------------Bienvenido! ----------------------------------\n"   
                 "Elige un festival : \n"
          "1.- Festival JOKINAL SOUND \n"
          "2.- Festival Tomorrowland  \n"
@@ -128,7 +123,7 @@ void menuSeleccionFestival(Usuario *u)
          "5.- Festival Ultra Miami \n"
          "6.- Volver \n"
          "0.- Cerrar\n\n"
-         "\t\tIngrese una opcion: [ ]\b\b", u->id_user);
+         "\t\tIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
         fflush(stdin);
@@ -182,9 +177,9 @@ void menuDentroFestival(Festival *f, Usuario *u)
     do{
         printf(   
                
-         "1.- Ver info festival: \n"
-         "2.- Ver info entradas:  \n"
-         "0.- Cerrar\n\n"
+         "1.- Ver info festival. \n"
+         "2.- Ver info entradas.  \n"
+         "0.- Cerrar.\n\n"
          "\t\tIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
@@ -192,7 +187,6 @@ void menuDentroFestival(Festival *f, Usuario *u)
         switch (input)
         {
         case 1:
-          printf("\tINFORMACION DE %s: \n\n%s\n\n\n", f->nom_fest, f->info_fest);
           menuDentroFestival(f, u);
           break;
         case 2:
@@ -201,7 +195,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
           break; 
         case 0:
 
-            printf("\nFin del programa\n\n");
+            printf("\nFin del programa.\n\n");
             eleccion=1;
             break;
         }

@@ -184,6 +184,40 @@ Festival *getFestival(char *nom_fest)
 
 
 }
+
+int comprobarUsuario(char *nom_user, char *pass_user){
+	startConn();
+	char sql[] = "SELECT nom_user, pass_user FROM Usuario";
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int usuarioLogueado = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			if(strcmp(nom_user, sqlite3_column_text(stmt,1)) == 0 && strcmp(pass_user, sqlite3_column_text(stmt,2)) == 0)
+            {
+				usuarioLogueado = 1;
+				break;
+			}
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return usuarioLogueado
+    ;
+}
 /**
 Usuario **getListaUsuarios(char *id_user) 
 {
