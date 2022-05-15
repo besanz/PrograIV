@@ -26,12 +26,12 @@ void menuInicial(){
 		switch (opcion) {
 			case 1:
 			
-                //verUsuariosRegistrados();
+        //verUsuariosRegistrados();
 				break;
 			case 2:	
                 
-          //Aqui se registra un nuevo usuario
-          registrarUsuario();
+        //Aqui se registra un nuevo usuario
+        registrarUsuario();
 				break;
 			case 3:
 				
@@ -56,25 +56,21 @@ void inicioSesion(){
 	Usuario *usu;
   usu=(Usuario*)malloc(sizeof(Usuario));
 
-  system("cls");
 
 	do {
-		
+		system("cls");
 		printf("\n\t\t\tINGRESAR AL SISTEMA\n");
 		printf("\t\t\t===================\n");
 		printf("\n\t\tUSUARIO: ");
-		
 		scanf("%s", nombreUsuario);
 		printf("\t\tCLAVE: ");
-		
 		scanf("%s", password);
-
 
 		usu = getUsuario(nombreUsuario);
 		
 		if(strcmp(usu->id_user, nombreUsuario) == 0 && strcmp(usu->pass_user, password) == 0){
 			
-			printf("\nEL TAJAAASS\n");
+			
 			correcto=1;
 			intento=intento+1;
 		}
@@ -99,8 +95,8 @@ void registrarUsuario(){
   char *nombre;
   char *pass;
   
-  printf("\n\t\tREGISTRAR AL SISTEMA\n");
-	printf("\t\t\t===================\n");		
+  system("cls");
+  printf("\n\t\tREGISTRAR AL SISTEMA\n");		
   printf("\n\t\tUsuario: ");
   scanf("%s", id);
   printf("\nNombre real:");
@@ -111,7 +107,7 @@ void registrarUsuario(){
     
   
 }
-void menuSeleccionFestival(Usuario * u)
+void menuSeleccionFestival(Usuario *u)
 { 
 
     int input;
@@ -140,34 +136,34 @@ void menuSeleccionFestival(Usuario * u)
         {
         case 1:
           f = getFestival("JOKINAL SOUND");
-        	menudentroFestival(f, u);
+        	menuDentroFestival(f, u);
         	eleccion=1;
           
           break;
         case 2:
            f = getFestival("Tomorrowland");
-        	menudentroFestival(f, u);
+        	menuDentroFestival(f, u);
         	eleccion=1;
         
           break; 
         case 3:
           f = getFestival("Vive Latino");
-        	menudentroFestival(f, u);
+        	menuDentroFestival(f, u);
         	eleccion=1;
           break;
         case 4:
           f = getFestival("Coachella");
-        	menudentroFestival(f, u);
+        	menuDentroFestival(f, u);
         	eleccion=1;
           break;
         case 5:
           f = getFestival("Ultra Miami");
-        	menudentroFestival(f, u);
+        	menuDentroFestival(f, u);
         	eleccion=1;
           break;
         case 6:
           eleccion=1;
-          menuinicial();
+          menuInicial();
           break;
         case 0:
             printf("\n\n\n");
@@ -184,7 +180,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
     system("cls");
 
     do{
-            printf(   
+        printf(   
                
          "1.- Ver info festival: \n"
          "2.- Ver info entradas:  \n"
@@ -197,7 +193,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
         {
         case 1:
           printf("\tINFORMACION DE %s: \n\n%s\n\n\n", f->nom_fest, f->info_fest);
-          menudentroFestival(f, u);
+          menuDentroFestival(f, u);
           break;
         case 2:
           menuEntradas(u);
@@ -280,10 +276,10 @@ void menuEntradas(Usuario *u)
             eleccion=1;
             break;
         }
-      }  while (eleccion==0);
+    }while (eleccion==0);
     
 }
-void menuComprarEntrada(Entrada * e, Usuario * u){
+void menuComprarEntrada(Entrada *e, Usuario *u){
 
   int input;
   int eleccion=0;

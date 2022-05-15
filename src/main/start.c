@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "c/menu.h"
 
-void main(void){
+void main(){
+    startConn();
     menuInicial();
 }
