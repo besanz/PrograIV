@@ -276,7 +276,7 @@ void menuEntradas(Usuario *u)
 void menuComprarEntrada(Entrada *e, Usuario *u){
 
   int input;
-  int eleccion=0;
+  int eleccion=1;
   int elec;
 
   system("cls");
