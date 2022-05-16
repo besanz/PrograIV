@@ -26,7 +26,7 @@ void menuInicial(){
 		switch (opcion) {
 			case 1:
 			
-       // verUsuariosRegistrados();
+       getListaUsuarios();
 				break;
 			case 2:	
                 
@@ -309,6 +309,16 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     }
     
   }while(eleccion=1);
+}
+void InfoFestival(Festival *f)
+{
+
+
+
+
+
+
+  
 }
  
 

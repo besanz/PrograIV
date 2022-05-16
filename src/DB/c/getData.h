@@ -19,5 +19,8 @@ Usuario *getUsuario(char *id_user);
 Festival *getFestival(char *nom_fest);
 
 int comprobarUsuario(char *nom_user, char *pass_user);
+Usuario **getListaUsuarios();
+int getNumFilas(char *tabla);
+
 
 #endif 

@@ -218,69 +218,7 @@ int comprobarUsuario(char *nom_user, char *pass_user){
 	return usuarioLogueado
     ;
 }
-/**
-Usuario **getListaUsuarios(char *id_user) 
-{
-    
-    int rc, rc1;
-    char *err_msg = 0;
-    sqlite3_stmt *res,*res1;
-    Usuario *usu;
-    usu=(Usuario*)malloc(sizeof(Usuario));
 
-    char *sql = "SELECT * FROM Usuario WHERE id_user=?";
-    char *sql1 = "SELECT COUNT(*) FROM Usuario WHERE id_user=?";
-
-    rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
-    rc1 = sqlite3_prepare_v2(db, sql1, -1, &res1, 0);
-
-    if (rc == SQLITE_OK && rc1 == SQLITE_OK)
-    {
-        sqlite3_bind_text(res, 1, id_user, (strlen(id_user)), SQLITE_STATIC);
-        sqlite3_bind_text(res1, 1, id_user, (strlen(id_user)), SQLITE_STATIC);
-        
-    }
-    else
-    {
-        fprintf(stderr, "Error para ejecutar el statement: %s\n", sqlite3_errmsg(db));
-    }
-
-    int step = sqlite3_step(res);
-    int step1 = sqlite3_step(res1);
-
-    numFilas = sqlite3_column_int(res1,0);
-
-    Usuario **listaUsu;
-    listaUsu = (Usuario**)malloc(numFilas*sizeof(Usuario*));
-    for(int i=0;i<numFilas;i++){
-        *(listaUsu+i)=(Usuario*)malloc(sizeof(Usuario));
-    }
-
-    int i=0;
-    
-    while (step == SQLITE_ROW){
-        strcpy((*(listaUsu + i))->id_user, (const char *)sqlite3_column_text(res, 0));
-        strcpy((*(listaUsu + i))->nom_user, (const char *)sqlite3_column_text(res, 1));
-        strcpy((*(listaUsu + i))->pass_user, (const char *)sqlite3_column_text(res, 2));
-        
-        (*(listaUsu + i))->ent_fest= sqlite3_column_int(res, 3);
-
-        
-        i=i+1;
-        step = sqlite3_step(res);
-    }
-
-    
-        
-    
-    sqlite3_finalize(res);
-    
-    
-
-    return listaUsu;
-    
-}
-**/
 
 Dj *getinfoDj(int cod_dj){
     int rc;
@@ -318,6 +256,67 @@ Dj *getinfoDj(int cod_dj){
     return djbase;
     free(djbase);
 }
+Usuario **getListaUsuarios(){
+	startConn();
+	sqlite3_stmt *stmt;
+	char sql[] = "SELECT * FROM usuario";
+	int res = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (res != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	}
+
+	int numFilas = getNumFilas("SELECT * FROM usuario");
+	Usuario **user = (Usuario **) malloc(numFilas * sizeof(Usuario *));
+	for(int i = 0; i < numFilas; i++){
+		*(user + i) = (Usuario *) malloc(sizeof(Usuario));
+	}
+	int i = 0;
+	do {
+		res = sqlite3_step(stmt) ;
+		if (res == SQLITE_ROW) {
+			strcpy((*(user + i))-> id_user, (const char *) sqlite3_column_text(stmt, 0));
+            strcpy((*(user + i))-> nom_user, (const char *) sqlite3_column_text(stmt, 1));
+            strcpy((*(user + i))-> pass_user, (const char *) sqlite3_column_text(stmt, 2));
+            (*(user+i))->ent_fest= sqlite3_column_int(res, 3); 
+          
+            
+            i++;
+		}
+	} while (res == SQLITE_ROW);
+
+	return user;
+}
+int getNumFilas(char sql[]){
+	startConn();
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int numFilas = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			numFilas++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return numFilas;
+}
+
+//El siguiente metodo devuelve un 1 si el usuario esta registrado en la BD, y un 0 en caso contrario.f
 
 
 
