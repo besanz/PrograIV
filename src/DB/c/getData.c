@@ -218,6 +218,75 @@ int comprobarUsuario(char *nom_user, char *pass_user){
 	return usuarioLogueado
     ;
 }
+<<<<<<< HEAD
+=======
+
+int getNumFilas(char sql[]){
+	startConn();
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int numFilas = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			numFilas++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return numFilas;
+}
+
+int usuarioLibre(char *nom_user) {
+	char sql[] = "SELECT * FROM usuario WHERE usuario = '";
+	strcat(sql, nom_user);
+	strcat(sql, "'");
+	if(getNumFilas(sql) > 0) {
+		return 0;
+	} else{
+		return 1;
+	}
+}
+
+/**
+Usuario **getListaUsuarios(char *id_user) 
+{
+    
+    int rc, rc1;
+    char *err_msg = 0;
+    sqlite3_stmt *res,*res1;
+    Usuario *usu;
+    usu=(Usuario*)malloc(sizeof(Usuario));
+
+    char *sql = "SELECT * FROM Usuario WHERE id_user=?";
+    char *sql1 = "SELECT COUNT(*) FROM Usuario WHERE id_user=?";
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
+    rc1 = sqlite3_prepare_v2(db, sql1, -1, &res1, 0);
+
+    if (rc == SQLITE_OK && rc1 == SQLITE_OK)
+    {
+        sqlite3_bind_text(res, 1, id_user, (strlen(id_user)), SQLITE_STATIC);
+        sqlite3_bind_text(res1, 1, id_user, (strlen(id_user)), SQLITE_STATIC);
+        
+    }
+    else
+    {
+        fprintf(stderr, "Error para ejecutar el statement: %s\n", sqlite3_errmsg(db));
+    }
+>>>>>>> fdfdc2b89e60f12ac38566d5492b633b5c2664ee
 
 
 Dj *getinfoDj(int cod_dj){
