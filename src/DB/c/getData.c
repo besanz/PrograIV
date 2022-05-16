@@ -218,6 +218,46 @@ int comprobarUsuario(char *nom_user, char *pass_user){
 	return usuarioLogueado
     ;
 }
+
+int getNumFilas(char sql[]){
+	startConn();
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	int numFilas = 0;
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			numFilas++;
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+	return numFilas;
+}
+
+int usuarioLibre(char *nom_user) {
+	char sql[] = "SELECT * FROM usuario WHERE usuario = '";
+	strcat(sql, nom_user);
+	strcat(sql, "'");
+	if(getNumFilas(sql) > 0) {
+		return 0;
+	} else{
+		return 1;
+	}
+}
+
 /**
 Usuario **getListaUsuarios(char *id_user) 
 {

@@ -85,23 +85,43 @@ void inicioSesion(){
 
 void registrarUsuario(){
 
-  int elec=0;
-  char *id;
-  char *nombre;
-  char *pass;
-  
-  system("cls");
-  printf("\n\t\tREGISTRAR AL SISTEMA\n");		
-  printf("\n\t\tUsuario: ");
-  scanf("%s", id);
-  printf("\nNombre real:");
-  scanf("%s", nombre);
-  printf("\nContrasenya:");
-  scanf("%s", pass);
-  printf("Gracias por registrarte!");
-    
-  
+		printf("\n\t\tREGISTRO\n");
+		printf("\t\t=============\n\n");
+    char usuario[20];
+    int usuarioCorrecto = 0;
+    while(!usuarioCorrecto){
+        char user[20];
+        scanf("%s", user);
+        fflush(stdin);
+        if(usuarioLibre(user) == 0){
+            printf("El usuario ya existe, elige otro por favor.\nUsuario:\t");
+        } else{
+            usuarioCorrecto = 1;
+            strcpy(usuario, user);
+        }
+    }
+
+    int *id_user = malloc(30*sizeof(char));
+    char *nom_user = malloc(30*sizeof(char));
+    char *pass_user = malloc(30 * sizeof(char));
+    int ent_fest;
+
+    printf("\nUsuario:\t");
+    scanf("%s", nom_user);
+    fflush(stdin);
+    printf("\nContrasenya:\t");
+    scanf("%s", pass_user);
+    fflush(stdin);
+    printf("\nUsuario registrado correctamente.\t");
+
+    Usuario nuevoUsuario = {id_user, pass_user, nom_user, 0};
+    insertarUsuario(nuevoUsuario);
+    free(id_user);
+    free(nom_user);
+    free(pass_user);
+    menuPrincipal();
 }
+
 void menuSeleccionFestival(Usuario *u)
 { 
 
@@ -112,17 +132,17 @@ void menuSeleccionFestival(Usuario *u)
     
     system("cls");
 
-
-    do{
-            printf("\n---------------------Bienvenido! ----------------------------------\n"   
-                "Elige un festival : \n"
-         "1.- Festival JOKINAL SOUND \n"
-         "2.- Festival Tomorrowland  \n"
-         "3.- Festival Vive Latino \n"
-         "4.- Festival Coachella \n"
-         "5.- Festival Ultra Miami \n"
-         "6.- Volver \n"
-         "0.- Cerrar\n\n"
+do{
+      system("cls");
+        printf("\t\t\n---------------------Bienvenido!----------------------------------\n"   
+         "\t\tElige un festival : \n"
+         "\t\t1. Festival JOKINAL SOUND. \n"
+         "\t\t2. Festival Tomorrowland.  \n"
+         "\t\t3. Festival Vive Latino. \n"
+         "\t\t4. Festival Coachella. \n"
+         "\t\t5. Festival Ultra Miami. \n"
+         "\t\t6. Volver. \n"
+         "\t\t0. Cerrar.\n\n"
          "\t\tIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
@@ -176,10 +196,9 @@ void menuDentroFestival(Festival *f, Usuario *u)
 
     do{
         printf(   
-               
-         "1.- Ver info festival. \n"
-         "2.- Ver info entradas.  \n"
-         "0.- Cerrar.\n\n"
+         "1. Ver info festival. \n"
+         "2. Ver info entradas.  \n"
+         "0. Cerrar.\n\n"
          "\t\tIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
@@ -217,15 +236,15 @@ void menuEntradas(Usuario *u)
             printf(   
                
         	"Elige una entrada : \n"
-			"1.- Entrada VIP: \n"
-			"2.- Entrada Normal:  \n"
-			"3.- Entrada especial Reggaeton:\n"
-			"4.- EntTotal Pack: \nra Raperos:\n"
-			"5.- Entrada para traperos:\n"
-			"6.- Entrada BackStage:\n"
-			"7.- Entrada AllIncluded:\n"
-      "8.- Entrada "
-			"0.- Cerrar\n\n"
+			"1. Entrada VIP: \n"
+			"2. Entrada Normal:  \n"
+			"3. Entrada especial Reggaeton:\n"
+			"4. EntTotal Pack: \nra Raperos:\n"
+			"5. Entrada para traperos:\n"
+			"6. Entrada BackStage:\n"
+			"7. Entrada AllIncluded:\n"
+      "8. Entrada "
+			"0. Cerrar\n\n"
       
          "\t\tIngrese una opcion: [ ]\b\b");
         
