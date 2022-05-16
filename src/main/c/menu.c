@@ -26,7 +26,7 @@ void menuInicial(){
 		switch (opcion) {
 			case 1:
 			
-        //verUsuariosRegistrados();
+       // verUsuariosRegistrados();
 				break;
 			case 2:	
                 
