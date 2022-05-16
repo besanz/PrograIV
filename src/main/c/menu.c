@@ -203,6 +203,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
     
 }
 
+
 void menuEntradas(Usuario *u)
 {
     int input;
