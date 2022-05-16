@@ -20,6 +20,6 @@ void menuSeleccionFestival(Usuario *u);
 
 void inicioSesion();
 
-void registrarUsuario();
+//void registrarUsuario();
 
 #endif
