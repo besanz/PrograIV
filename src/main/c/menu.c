@@ -147,41 +147,8 @@ do{
       }  while (eleccion == 0);
     
 }
-void menuDentroFestival(Festival *f, Usuario *u)
+void menuInfoFestival(Festival *f, Usuario *u)
 {
-    int input;
-    int eleccion = 0;
-    
-    system("cls");
-
-    do{
-        printf(   
-         "1. Ver info festival. \n"
-         "2. Ver info entradas.  \n"
-         "0. Cerrar.\n\n"
-         "\t\tIngrese una opcion: [ ]\b\b");
-        
-        scanf("%d", &input);
-        fflush(stdin);
-        switch (input)
-        {
-        case 1:
-          menuInfoFestival(f, u);
-          break;
-        case 2:
-          menuEntradas(u);
-        
-          break; 
-        case 0:
-
-            printf("\nFin del programa.\n\n");
-            eleccion=1;
-            break;
-        }
-      }  while (eleccion==0);
-    
-}
-void menuInfoFestival(Festival *f, Usuario *u){
    int input;
    int eleccion=0;
     do{
@@ -216,6 +183,41 @@ void menuInfoFestival(Festival *f, Usuario *u){
         }
     }while(eleccion==0);
 }
+void menuDentroFestival(Festival *f, Usuario *u)
+{
+    int input;
+    int eleccion = 0;
+    
+    system("cls");
+
+    do{
+        printf(   
+         "1. Ver info festival. \n"
+         "2. Ver info entradas.  \n"
+         "0. Cerrar.\n\n"
+         "\t\tIngrese una opcion: [ ]\b\b");
+        
+        scanf("%d", &input);
+        fflush(stdin);
+        switch (input)
+        {
+        case 1:
+          menuInfoFestival(f, u);
+          break;
+        case 2:
+          menuEntradas(u);
+        
+          break; 
+        case 0:
+
+            printf("\nFin del programa.\n\n");
+            eleccion=1;
+            break;
+        }
+      }  while (eleccion==0);
+    
+}
+
 
 
 void menuEntradas(Usuario *u)
