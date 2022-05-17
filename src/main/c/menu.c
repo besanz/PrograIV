@@ -166,7 +166,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
         switch (input)
         {
         case 1:
-          menuDentroFestival(f, u);
+          menuInfoFestival(f, u);
           break;
         case 2:
           menuEntradas(u);
@@ -180,6 +180,41 @@ void menuDentroFestival(Festival *f, Usuario *u)
         }
       }  while (eleccion==0);
     
+}
+void menuInfoFestival(Festival *f, Usuario *u){
+   int input;
+   int eleccion=0;
+    do{
+        printf("Bienvenido al %s", f->nom_fest);
+        printf(
+            "Aqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
+            "------------------------------------------------------------------------------\n"    
+        );
+        printf("%s\n", f->info_fest);
+        printf(
+            "Selecciona una opcion: \n"
+            "1- Comprar la entrada para el festival\n"
+            "2- Consultar otros festivales\n"
+            "3-Volver\n\n"
+            "\t\tIngrese una opcion: [ ]\b\b"
+        );
+        scanf("%d", &input);
+        fflush(stdin);
+        switch (input)
+        {
+            case 1:
+                menuEntradas(u);
+                break;
+            case 2:
+                menuSeleccionFestival(u);
+                break;
+            case 3:
+                eleccion=1;
+                menuDentroFestival(f,u);
+                break;
+            
+        }
+    }while(eleccion==0);
 }
 
 
