@@ -1,4 +1,37 @@
 
+
+Usuario* getListaUsuarios (){
+    startConn();
+	sqlite3_stmt *stmt;
+	char sql[] = "SELECT * FROM usuario";
+    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (result != SQLITE_OK){
+        printf("Error preparing statemet (SELECT)\n");
+        printf("%s\n", sqlite3_errmsg(db));
+    }
+
+    int numFilas = getNumFilas("SELECT * FROM usuario");
+    
+    Usuario* users = (Usuario*)malloc(numFilas*sizeof(Usuario));
+    int i = 0;
+
+
+    do {
+        result = sqlite3_step(stmt);
+        if (result == SQLITE_ROW){
+            users[i].nom_user = sqlite3_column_int(stmt, 1);
+            i++;
+        }
+    } while (result == SQLITE_ROW);
+    
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+        printf("Error finalizing statement (SELECT)\n");
+        printf("%s\n", sqlite3_errmsg(db));
+    }
+    
+    return users;
+}
 /*
 void iniciarSesion(){
     imprimirTitulo();

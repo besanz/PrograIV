@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,10 +7,11 @@
 #include "../../db/c/postData.h"
 #include "../connect/connect.h"
 
-/*int insertarUsuario(Usuario usuario) {
+
+int insertarUsuario(Usuario usuario) {
 	startConn();
     sqlite3_stmt *stmt;
-	char sql[] = "INSERT INTO usuario VALUES (?, ?, ?, 0)";
+	char sql[] = "INSERT INTO usuario VALUES (0, ?, ?, 0)";
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (INSERT)\n");

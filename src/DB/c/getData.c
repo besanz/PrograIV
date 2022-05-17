@@ -222,36 +222,42 @@ Dj *getinfoDj(int cod_dj){
     return djbase;
     free(djbase);
 }
-Usuario **getListaUsuarios(){
-	startConn();
+Usuario* getListaUsuarios (){
+    startConn();
 	sqlite3_stmt *stmt;
-	char sql[] = "SELECT nom_user FROM usuario";
-	int res = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	char sql[] = "SELECT * FROM usuario";
+    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (result != SQLITE_OK){
+        printf("Error preparing statemet (SELECT)\n");
+        printf("%s\n", sqlite3_errmsg(db));
+    }
 
-	if (res != SQLITE_OK) {
-		printf("Error preparing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-	}
+    int numFilas = getNumFilas("SELECT * FROM usuario");
+    
+    Usuario* users = (Usuario*)malloc(numFilas*sizeof(Usuario));
+    int i = 0;
+    printf("\tTLISTA DE USUARIOS REGISTRADOS");
+    printf("\n\t==============================\n");
 
-	int numFilas = getNumFilas("SELECT nom_user FROM usuario");
-	Usuario **users = (Usuario **) malloc(numFilas * sizeof(Usuario *));
-	for(int i = 0; i < numFilas; i++){
-		*(users + i) = (Usuario *) malloc(sizeof(Usuario));
-	}
-	int i = 0;
-	do {
-		res = sqlite3_step(stmt) ;
-		if (res == SQLITE_ROW) {
-		//	strcpy((*(users + i))-> id_user, (const char *) sqlite3_column_text(stmt, 0));
-          //  strcpy((*(users + i))-> nom_user, (const char *) sqlite3_column_text(stmt, 1));
-            strcpy((*(users + i))-> pass_user, (const char *) sqlite3_column_text(stmt, 2));
-           // (*(user+i))->ent_fest= sqlite3_column_int(res, 3); 
-                    
+    do { 
+        result = sqlite3_step(stmt);
+        if (result == SQLITE_ROW){
+            int size = strlen((char*)sqlite3_column_text(stmt,1));
+            users[i].nom_user = (char*)malloc((size+1)*sizeof(char));
+            users[i].nom_user = strcpy(users[i].nom_user,(char*)sqlite3_column_text(stmt,1));
+            printf("\tUsuario N.%i: " ,i);
+            printf(users[i].nom_user);
+            printf("\n");
             i++;
-		}
-	} while (res == SQLITE_ROW);
-
-	return users; //users es una lista
+        }
+    } while (result == SQLITE_ROW);
+    
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+        printf("Error finalizing statement (SELECT)\n");
+        printf("%s\n", sqlite3_errmsg(db));
+    }
+    return users;
 }
 int getNumFilas(char sql[]){
 	startConn();
@@ -280,7 +286,3 @@ int getNumFilas(char sql[]){
 	}
 	return numFilas;
 }
-
-
-
-

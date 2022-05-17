@@ -25,11 +25,9 @@ void menuInicial(){
 
 		switch (opcion) {
 			case 1:
-      getListaUsuarios();
-				break;
+       // getListaUsuarios();
+        menuVerUsuarios();
 			case 2:	
-                
-        //Aqui se registra un nuevo usuario
         //registrarUsuario();
 				break;
 			case 3:
@@ -44,9 +42,12 @@ void menuInicial(){
 	} while (repite == 1);
 	printf("\nFIN DEL PROGRAMA");
 } 
+
 int comprobarUsuario(char *usuario, char *contrasenya){
 	startConn();
-	char sql[] = "SELECT usuario, contrasenya FROM usuario";
+	
+
+char sql[] = "SELECT usuario, contrasenya FROM usuario";
     sqlite3_stmt *stmt;
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
@@ -114,6 +115,32 @@ void inicioSesion(){
 
 }
 
+void menuVerUsuarios()
+{ 
+  int a=1;
+  int input;
+
+	do {	
+    
+    getListaUsuarios();
+    printf("\t1. Volver. \n"
+         "\t2. Cerrar. \n"
+         "\tIngrese una opcion: [ ]\b\b");
+         
+    scanf("%d", &input);
+    fflush(stdin);
+		switch (input) {
+			case 1:
+       menuInicial();
+      case 2:	
+       	break;
+			case 0:
+				a = 0;
+		}  
+    a=0; 
+	} while (a == 1);
+	printf("\nFIN DEL PROGRAMA");
+} 
 
 void menuSeleccionFestival(Usuario *u)
 { 
@@ -127,7 +154,7 @@ void menuSeleccionFestival(Usuario *u)
 
 do{
       system("cls");
-        printf("\t\t\n---------------------Bienvenido!----------------------------------\n"   
+        printf("\t\t\n---------------------Bienvenido!---------------------------\n"   
          "\t\tElige un festival : \n"
          "\t\t1. Festival JOKINAL SOUND. \n"
          "\t\t2. Festival Tomorrowland.  \n"
