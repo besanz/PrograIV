@@ -104,10 +104,10 @@ void inicioSesion(){
 			menuSeleccionFestival(usu);
 			
 		}else{
-      break;
       intento=intento+1;
       printf("Incorrecto");
       inicioSesion();
+      break;
     }
 		
 	} while (intento < 4 && correcto == 0);
@@ -272,15 +272,15 @@ void menuEntradas(Usuario *u)
 			"5. Entrada para traperos:\n"
 			"6. Entrada BackStage:\n"
 			"7. Entrada AllIncluded:\n"
-      "8. Entrada "
+      "8. Entrada:\n"
 			"0. Cerrar\n\n"
       
          "\t\tIngrese una opcion: [ ]\b\b");
         
         scanf("%c", &input);
         fflush(stdin);
-        switch (input)
-        {
+      switch (input)
+      {
       case 1:
           menuComprarEntrada(ent, u);
           break;
@@ -344,16 +344,7 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     
   }while(eleccion=1);
 }
-void InfoFestival(Festival *f)
-{
 
-  
-
-
-
-
-  
-}
  
 
 /*void registrarUsuario(){

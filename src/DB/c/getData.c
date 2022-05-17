@@ -225,7 +225,7 @@ Dj *getinfoDj(int cod_dj){
 Usuario **getListaUsuarios(){
 	startConn();
 	sqlite3_stmt *stmt;
-	char sql[] = "SELECT * FROM usuario";
+	char sql[] = "SELECT nom_user FROM usuario";
 	int res = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
 	if (res != SQLITE_OK) {
@@ -233,7 +233,7 @@ Usuario **getListaUsuarios(){
 		printf("%s\n", sqlite3_errmsg(db));
 	}
 
-	int numFilas = getNumFilas("SELECT * FROM usuario");
+	int numFilas = getNumFilas("SELECT nom_user FROM usuario");
 	Usuario **users = (Usuario **) malloc(numFilas * sizeof(Usuario *));
 	for(int i = 0; i < numFilas; i++){
 		*(users + i) = (Usuario *) malloc(sizeof(Usuario));
@@ -242,8 +242,8 @@ Usuario **getListaUsuarios(){
 	do {
 		res = sqlite3_step(stmt) ;
 		if (res == SQLITE_ROW) {
-			strcpy((*(users + i))-> id_user, (const char *) sqlite3_column_text(stmt, 0));
-            strcpy((*(users + i))-> nom_user, (const char *) sqlite3_column_text(stmt, 1));
+		//	strcpy((*(users + i))-> id_user, (const char *) sqlite3_column_text(stmt, 0));
+          //  strcpy((*(users + i))-> nom_user, (const char *) sqlite3_column_text(stmt, 1));
             strcpy((*(users + i))-> pass_user, (const char *) sqlite3_column_text(stmt, 2));
            // (*(user+i))->ent_fest= sqlite3_column_int(res, 3); 
                     
