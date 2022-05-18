@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX 30
 
 
 void menuInicial(){
@@ -13,8 +14,9 @@ void menuInicial(){
 	int repite = 1;
 	int opcion;
 
-	system("cls");
+	
 	do {
+    system("cls");
 		printf("\n\t\t\tMENU INICIAL\n");
 		printf("\t\t\t============\n\n");
 		printf("\t\t1. Ver Usuarios Registrados\n");
@@ -29,7 +31,9 @@ void menuInicial(){
        // getListaUsuarios();
         menuVerUsuarios();
 			case 2:	
-        //registrarUsuario();
+
+      
+        menuRegistrarUsuario();
 				break;
 			case 3:
 				
@@ -212,17 +216,17 @@ void menuInfoFestival(Festival *f, Usuario *u)
    int input;
    int eleccion=0;
     do{
-        printf("Bienvenido al %s", f->nom_fest);
+        printf("Bienvenido al %s\n", f->nom_fest);
         printf(
             "Aqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
-            "------------------------------------------------------------------------------\n"    
+            "------------------------------------------------------------------------------\n\n"    
         );
         printf("%s\n", f->info_fest);
         printf(
             "Selecciona una opcion: \n"
-            "1- Comprar la entrada para el festival\n"
-            "2- Consultar otros festivales\n"
-            "3-Volver\n\n"
+            "1. Comprar la entrada para el festival\n"
+            "2. Consultar otros festivales\n"
+            "3. Volver\n\n"
             "\t\tIngrese una opcion: [ ]\b\b"
         );
         scanf("%d", &input);
@@ -362,7 +366,6 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
 
     switch(elec){
       case 1:
-        //se anyade la entrada al usuario
         printf("Gracias por la compra");
         break;
       case 2:
@@ -374,50 +377,179 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
   }while(eleccion=1);
 }
 
+int insertarUsuario(Usuario usuario) {
+	startConn();
+    sqlite3_stmt *stmt;
+	char sql[] = "INSERT INTO usuario VALUES (0, ?, ?, 0)";
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+
+	result = sqlite3_bind_text(stmt, 1, usuario.nom_user, strlen(usuario.nom_user), SQLITE_STATIC);
+	result = sqlite3_bind_text(stmt, 2, usuario.pass_user, strlen(usuario.pass_user), SQLITE_STATIC);
+
+
+
+	if (result != SQLITE_OK) {
+		printf("Error binding parameters\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error inserting new data\n");
+		return result;
+	}
+
+	result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (INSERT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	return SQLITE_OK;
+}
+
+int leerLinea(char *cad, int n)
+{
+	int i, c;
+
+	/* 1 COMPROBACIÓN DE DATOS INICIALES EN EL BUFFER */
+	c = getchar();
+	if (c == EOF) {
+		cad[0] = '\0';
+		return 0;
+	}
+
+	if (c == '\n') {
+		i = 0;
+	} else {
+		cad[0] = c;
+		i = 1;
+	}
+
+	/* 2. LECTURA DE LA CADENA */
+	for (; i < n - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
+		cad[i] = c;
+	}
+	cad[i] = '\0';
+
+	/*3. LIMPIEZA DEL BUFFER */ 
+	if (c != '\n' && c != EOF) /* es un caracter */
+		while ((c = getchar()) != '\n' && c != EOF);
  
+	return 1;
+}
+ 
+void menuRegistrarUsuario() {
+	Usuario usuario;
+	char nombreUsuario[MAX];
+	char respuesta[MAX];
+	char repite = 1;
+  char linea[MAX];
+	
+	do {
+		system("cls");
+		printf("\n\t\t\tREGISTRAR USUARIO\n");
+		printf("\t\t\t=================\n");
+		printf("\n\tIngrese el nombre de usuario: ");
+		leerLinea(linea, MAX);
+		sscanf(linea, "%s", nombreUsuario);
+
+		/* Se verifica que el nombre de usuario no exista */
+		if (usuarioLibre(nombreUsuario) == 1) {
+			strcpy(usuario.nom_user, nombreUsuario);
+
+			printf("\tIngrese la clave: ");
+			leerLinea(usuario.pass_user, MAX);
+
+			/* Se inserta el usuario en la bd */
+			if (insertarUsuario(usuario)) {
+				printf("\n\tEl usuario fue registrado satisfactoriamente!\n");
+
+			} else {
+				printf("\n\tOcurrio un error al registrar el usuario\n");
+				printf("\nInténtelo mas tarde\n");
+			}
+		} else {
+			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
+			printf("\tNo puede registrar dos usuarios con el mismo nombre de usuario.\n");
+		}
+
+		printf("\n\tDesea seguir registrando usuarios? [S/N]: ");
+		leerLinea(respuesta, MAX);
+ 
+		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+			repite = 0;
+		}
+
+	} while (repite == 1);
+
+  menuInicial();
+}
 
 void registrarUsuario(){
 
-		printf("\n\t\tREGISTRO\n");
-		printf("\t\t=============\n\n");
-    char usuario[20];
+	int end, pi = 0;
+	char nombreUsuario[MAX];
+	char password1[MAX];
+  char password2[MAX];
+	
+	Usuario *usuario;
+  usuario=(Usuario*)malloc(sizeof(Usuario));
+
+
+	do {
+		system("cls");
+		printf("\n\t\t\tREGISTRARSE AL SISTEMA\n");
+		printf("\t\t\t-------------------------\n");
+		printf("\n\t\tElige un nombre de Usuario: ");
+		scanf("%s", nombreUsuario);
+
     int usuarioCorrecto = 0;
     while(!usuarioCorrecto){
-        char user[20];
-        scanf("%s", user);
+        char userName[MAX];
+        scanf("%s", userName);
         fflush(stdin);
-        if(usuarioLibre(user) == 0){
-            printf("El usuario ya existe, elige otro por favor.\nUsuario:\t");
+        if(usuarioLibre(userName) == 1){
+            printf("El usuario \"%s\" ya existe, elige otro", userName);
+
         } else{
             usuarioCorrecto = 1;
-            strcpy(usuario, user);
+            strcpy(usuario->nom_user, userName);
         }
     }
+  do{
 
-    int *id_user = malloc(30*sizeof(char));
-    char *nom_user = malloc(30*sizeof(char));
-    char *pass_user = malloc(30 * sizeof(char));
-    int ent_fest;
-    insertarUsuario();
 
-    printf("\nId:\t");
-    scanf("%s",id_user);
-    fflush(stdin);
-    printf("\nUsuario:\t");
-    scanf("%s", nom_user);
-    fflush(stdin);
-    printf("\nContrasenya:\t");
-    scanf("%s", pass_user);
-    fflush(stdin);
-    printf("\nUsuario registrado correctamente.\t");
+		printf("\t\tElige un buen Password: \n");
+		scanf("%s", password1);
 
-    Usuario nuevoUsuario = {id_user, pass_user, nom_user, 0};
-    insertarUsuario(nuevoUsuario);
-    free(id_user);
-    free(nom_user);
-    free(pass_user);
-    menuPrincipal();
+    printf("\t\tVuelve a escribirlo (para gozar x2): \n");
+		scanf("%s", password2);
+
+    if(password1 == password2){
+      strcpy(usuario->pass_user, password1);
+      insertarUsuario(*usuario);
+      pi=1;
+
+    printf("\t\tPulsa un numero para continuar [] \n");
+		scanf("%d", end);
+    }
+
+   } while (pi == 0);
+
+	} while (end == 0);
+
 }
+
+
 
 
 

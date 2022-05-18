@@ -288,10 +288,10 @@ int getNumFilas(char sql[]){
 }
 
 int usuarioLibre(char *nom_user) {
-	char sql[] = "SELECT * FROM Usuario WHERE Usuario = '";
+	char sql[] = "SELECT nom_user FROM usuario WHERE usuario = '";
 	strcat(sql, nom_user);
 	strcat(sql, "'");
-	if(getNumFilas(sql) > 0) {
+	if(sql == nom_user) {
 		return 0;
 	} else{
 		return 1;

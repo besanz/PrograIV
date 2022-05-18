@@ -22,6 +22,12 @@ void inicioSesion();
 
 void menuVerUsuarios();
 
-//void registrarUsuario();
+void registrarUsuario();
+
+void menuRegistrarUsuario();
+
+int leerLinea(char *cad, int n);
+
+int insertUsuario(Usuario usuario);
 
 #endif
