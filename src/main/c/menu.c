@@ -1,11 +1,12 @@
 #include "estructuras.h"
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../../db/c/getData.h"
+#include "../../db/c/postData.h"
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../db/c/postData.h"
+
 
 void menuInicial(){
 
@@ -375,7 +376,7 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
 
  
 
-/*void registrarUsuario(){
+void registrarUsuario(){
 
 		printf("\n\t\tREGISTRO\n");
 		printf("\t\t=============\n\n");
@@ -397,7 +398,11 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     char *nom_user = malloc(30*sizeof(char));
     char *pass_user = malloc(30 * sizeof(char));
     int ent_fest;
+    insertarUsuario();
 
+    printf("\nId:\t");
+    scanf("%s",id_user);
+    fflush(stdin);
     printf("\nUsuario:\t");
     scanf("%s", nom_user);
     fflush(stdin);
@@ -414,8 +419,6 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     menuPrincipal();
 }
 
-}
-*/
 
 
 

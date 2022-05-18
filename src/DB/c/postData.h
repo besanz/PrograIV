@@ -4,7 +4,7 @@
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../connect/connect.h"
 
-//int insertUsuario(Usuario usuario);
-
+int insertUsuario(Usuario usuario);
+void actualizarEntrada(char * nom_user,int *ent_fest);
 
 #endif
