@@ -286,7 +286,7 @@ void menuEntradas(Usuario *u)
     Entrada *ent;
     ent=(Entrada*)malloc(sizeof(Entrada));
 
-    system("cls"); 
+    system("cls");
 
     do{
             printf(   
@@ -304,39 +304,40 @@ void menuEntradas(Usuario *u)
       
          "\t\tIngrese una opcion: [ ]\b\b");
         
-        scanf("%c", &input);
+        scanf("%i", &input);
         fflush(stdin);
       switch (input)
       {
-      case 1:
+        case 1:
+          ent = getinfoEnt(1);
           menuComprarEntrada(ent, u);
           break;
-      case 2:
+        case 2:
           menuComprarEntrada(ent, u);
           break; 
-		  case 3:         
+		    case 3:         
           menuComprarEntrada(ent, u);
           break; 
-		  case 4:
+		    case 4:
           menuComprarEntrada(ent, u);
           break; 
-		  case 5:
+		    case 5:
           menuComprarEntrada(ent, u);
           break; 
-		  case 6: 
+		    case 6: 
           menuComprarEntrada(ent, u);        
           break; 
-		  case 7:
+		    case 7:
           menuComprarEntrada(ent, u);
           break; 
-      case 8:
+        case 8:
           menuComprarEntrada(ent, u);  
-        break;
-      case 0:
+          break;
+        case 0:
             printf("\nFin del programa.\n\n");
             eleccion=1;
             break;
-        }
+      }
     }while (eleccion==0);
     
 }
