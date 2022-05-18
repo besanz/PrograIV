@@ -61,8 +61,8 @@ void actualizarEntrada(char * nom_user,int *ent_fest){
     if (rc == SQLITE_OK)
     {
 
-        sqlite3_bind_int(res, 1, *ent_fest);
-        res = sqlite3_bind_text(stmt, 2,*nom_user, strlen(*nom_user), SQLITE_STATIC);
+        sqlite3_bind_int(res, 3, *ent_fest);
+        sqlite3_bind_text(stmt, 1,nom_user, (strlen(nom_user)), SQLITE_STATIC);
     }
     else
     {
