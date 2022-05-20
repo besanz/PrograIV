@@ -52,7 +52,7 @@ int comprobarUsuario(char *usuario, char *contrasenya){
 	startConn();
 	
 
-char sql[] = "SELECT usuario, contrasenya FROM usuario";
+char sql[] = "SELECT nom_user, pass_user FROM Usuario WHERE nom_user = ?";
     sqlite3_stmt *stmt;
 	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
@@ -60,7 +60,9 @@ char sql[] = "SELECT usuario, contrasenya FROM usuario";
 		printf("Error preparing statement (SELECT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 		return result;
-	}
+	} else {
+    sqlite3_bind_text(stmt, 1, usuario, (-1), SQLITE_STATIC);
+  }
 
 	int usuarioValido = 0;
 	do {
@@ -379,21 +381,21 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
 
 int insertarUsuario(Usuario usuario) {
 	startConn();
-    sqlite3_stmt *stmt;
-	char sql[] = "INSERT INTO usuario VALUES (0, ?, ?, 0)";
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+  sqlite3_stmt *stmt;
+	char sql[] = "INSERT INTO Usuario(nom_user, pass_user, ent_fest) VALUES ( ?, ?, 1)";
+	
+  
+  int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 	if (result != SQLITE_OK) {
 		printf("Error preparing statement (INSERT)\n");
 		printf("%s\n", sqlite3_errmsg(db));
 		return result;
 	}
 
+	sqlite3_bind_text(stmt, 1, usuario.nom_user, -1, SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 2, usuario.pass_user, -1, SQLITE_STATIC);
 
-	result = sqlite3_bind_text(stmt, 1, usuario.nom_user, strlen(usuario.nom_user), SQLITE_STATIC);
-	result = sqlite3_bind_text(stmt, 2, usuario.pass_user, strlen(usuario.pass_user), SQLITE_STATIC);
-
-
-
+  
 	if (result != SQLITE_OK) {
 		printf("Error binding parameters\n");
 		printf("%s\n", sqlite3_errmsg(db));
@@ -401,6 +403,8 @@ int insertarUsuario(Usuario usuario) {
 	}
 
 	result = sqlite3_step(stmt);
+
+  
 	if (result != SQLITE_DONE) {
 		printf("Error inserting new data\n");
 		return result;
@@ -412,8 +416,9 @@ int insertarUsuario(Usuario usuario) {
 		printf("%s\n", sqlite3_errmsg(db));
 		return result;
 	}
+  
 
-	return SQLITE_OK;
+	return result;
 }
 
 int leerLinea(char *cad, int n)
@@ -449,6 +454,8 @@ int leerLinea(char *cad, int n)
  
 void menuRegistrarUsuario() {
 	Usuario usuario;
+  usuario.nom_user = (char*)malloc(MAX*sizeof(char));
+  usuario.pass_user = (char*)malloc(MAX*sizeof(char));
 	char nombreUsuario[MAX];
 	char respuesta[MAX];
 	char repite = 1;
@@ -470,7 +477,7 @@ void menuRegistrarUsuario() {
 			leerLinea(usuario.pass_user, MAX);
 
 			/* Se inserta el usuario en la bd */
-			if (insertarUsuario(usuario)) {
+			if (insertarUsuario(usuario)==SQLITE_OK) {
 				printf("\n\tEl usuario fue registrado satisfactoriamente!\n");
 
 			} else {
@@ -478,7 +485,7 @@ void menuRegistrarUsuario() {
 				printf("\nInténtelo mas tarde\n");
 			}
 		} else {
-			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
+			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", nombreUsuario);
 			printf("\tNo puede registrar dos usuarios con el mismo nombre de usuario.\n");
 		}
 

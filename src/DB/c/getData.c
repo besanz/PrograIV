@@ -288,12 +288,33 @@ int getNumFilas(char sql[]){
 }
 
 int usuarioLibre(char *nom_user) {
-	char sql[] = "SELECT nom_user FROM usuario WHERE usuario = '";
-	strcat(sql, nom_user);
-	strcat(sql, "'");
-	if(sql == nom_user) {
-		return 0;
-	} else{
-		return 1;
+	char sql[] = "SELECT nom_user FROM usuario WHERE nom_user = ?";
+
+    startConn();
+    sqlite3_stmt *stmt;
+	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement (SELECT)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	} else {
+        sqlite3_bind_text(stmt, 1, nom_user, (-1), SQLITE_STATIC); 
+    }
+
+	int existeUser = 1;
+	do {
+		result = sqlite3_step(stmt) ;
+        
+		if (result == SQLITE_ROW) {
+            existeUser = strcmp(nom_user, (const char *)sqlite3_column_text(stmt, 0));
+		}
+	} while (result == SQLITE_ROW);
+
+	result = sqlite3_finalize(stmt);
+
+    
+    return existeUser; //0 si existe, >0 si no
+
 	}
-}
