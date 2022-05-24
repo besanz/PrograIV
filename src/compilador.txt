@@ -1,0 +1,1 @@
+gcc lib/sqlite3/sqlite3.c src/main/start.c src/main/c/menu.c src/db/c/getData.c src/db/c/postData.c src/db/connect/connect.c -o main

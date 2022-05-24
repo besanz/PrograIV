@@ -86,7 +86,7 @@ int __cdecl main(int argc, char **argv)
     }
 
     // Send an initial buffer
-    iResult = send( ConnectSocket, sendbuf, (int)strlen(sendbuf), 0 );
+    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
     if (iResult == SOCKET_ERROR) {
         printf("send failed with error: %d\n", WSAGetLastError());
         closesocket(ConnectSocket);

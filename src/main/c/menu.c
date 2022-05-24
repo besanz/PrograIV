@@ -25,7 +25,7 @@ void menuInicial(){
 		printf("\t\t0. Salir\n\n");
 		printf("\t\tIngrese una opcion: [ ]\b\b");
 		scanf("%i", &opcion);
-
+    
 		switch (opcion) {
 			case 1:
        // getListaUsuarios();
@@ -140,7 +140,9 @@ void menuVerUsuarios()
 			case 1:
        menuInicial();
       case 2:	
+        a=0;
        	break;
+         
 			case 0:
 				a = 0;
 		}  
@@ -320,24 +322,31 @@ void menuEntradas(Usuario *u)
           menuComprarEntrada(ent, u);
           break;
         case 2:
+          ent = getinfoEnt(2);
           menuComprarEntrada(ent, u);
           break; 
-		    case 3:         
+		    case 3:        
+          ent = getinfoEnt(3); 
           menuComprarEntrada(ent, u);
           break; 
 		    case 4:
+          ent = getinfoEnt(4);
           menuComprarEntrada(ent, u);
           break; 
 		    case 5:
+          ent = getinfoEnt(5);
           menuComprarEntrada(ent, u);
           break; 
 		    case 6: 
+          ent = getinfoEnt(6);
           menuComprarEntrada(ent, u);        
           break; 
 		    case 7:
+          ent = getinfoEnt(7);
           menuComprarEntrada(ent, u);
           break; 
         case 8:
+          ent = getinfoEnt(8);
           menuComprarEntrada(ent, u);  
           break;
         case 0:
@@ -362,7 +371,8 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     printf("------------------------------------");
     printf("\nQuieres comprar la entrada %s? \n", e->tipo_ent);
  
-    printf("1.Si\n2.No");
+    printf("1.Si\n2.No\n");
+    printf("\tIngrese una opcion: [ ]\b\b");
 
     scanf("%i", &elec);
 
