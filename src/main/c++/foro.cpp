@@ -1,5 +1,7 @@
 #include <fstream>  // Para ofstream
 #include <iostream> // Para cout
+#include<stdio.h>
+
 using namespace std;
 
 int main()
