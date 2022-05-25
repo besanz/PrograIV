@@ -1,8 +1,10 @@
-#include "estructuras.h"
+extern "C"{
+  #include "estructuras.h"
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../../db/c/getData.h"
 #include "../../db/c/postData.h"
 #include "menu.h"
+}
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,8 +70,8 @@ char sql[] = "SELECT nom_user, pass_user FROM Usuario WHERE nom_user = ?";
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			if(strcmp(usuario, sqlite3_column_text(stmt,0)) == 0 &&
-			strcmp(contrasenya, sqlite3_column_text(stmt,1)) == 0){
+			if(strcmp(usuario, (const char*)sqlite3_column_text(stmt,0)) == 0 &&
+			strcmp(contrasenya,(const char*)sqlite3_column_text(stmt,1)) == 0){
 				usuarioValido = 1;
 				break;
 			}
