@@ -1,10 +1,10 @@
-extern "C"{
+
   #include "estructuras.h"
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../../db/c/getData.h"
 #include "../../db/c/postData.h"
 #include "menu.h"
-}
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
