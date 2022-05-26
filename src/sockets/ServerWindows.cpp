@@ -7,9 +7,10 @@ extern "C" //LOS .H DE LO QUE HE IMPLEMENTADO EN C
 {
     
     #include "../../lib/sqlite3/sqlite3.h"
+    #include "../../src/main/c/menu.h"
     
 }
-#include "../main/c/menu.h"
+
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -61,7 +62,7 @@ int __cdecl main(void)
 
     char* f_pathBD = new char[DEF];
     sqlite3 *db;
-    int result = sqlite3_open(f_pathBD, &db);
+    int resultado = sqlite3_open(f_pathBD, &db);
 
     
     // Initialize Winsock
@@ -126,7 +127,7 @@ int __cdecl main(void)
 
     // No longer need server socket
     closesocket(ListenSocket);
-
+    
     // Receive until the peer shuts down the connection
     do {
         //1: El cliente se ha conectado!
@@ -167,7 +168,7 @@ int __cdecl main(void)
         //CuentaCorriente *cuenta = new CuentaCorriente(1, 200.00, cliente);
     
         //metodo polimorfico
-        sendbuf = "¡Hola %s! \n", "JOKIN";
+        sendbuf = "¡Hola %s! \n";
         iSendResult = send( ClientSocket, sendbuf, (int)strlen(sendbuf), 0 );
             if (iSendResult == SOCKET_ERROR) {
                 printf("send failed with error: %d\n", WSAGetLastError());
