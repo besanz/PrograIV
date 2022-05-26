@@ -1,9 +1,12 @@
-#define getdata_h_
-#ifndef getdata_h_
-#include "../c/estructuras.h"
+#include <stdlib.h>
+#include <string.h>
 
-using namespace std;
-using namespace containers;
+#include <iostream>
+#include "clases.h"
+#ifndef getdata_h_
+#define getdata_h_
+
 
 
 #endif
+
