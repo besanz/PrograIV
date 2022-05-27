@@ -30,4 +30,6 @@ int leerLinea(char *cad, int n);
 
 int insertUsuario(Usuario usuario);
 
+void setTimeout(int milliseconds);
+
 #endif

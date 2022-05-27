@@ -1,20 +1,15 @@
-extern "C"{
-  #include "estructuras.h"
-  #include "../../../lib/sqlite3/sqlite3.h"
-  #include "../../db/c/getData.h"
-  #include "../../db/c/postData.h"
-  #include "menu.h"
-}
 
-#include "../../proyecto/cliente/Socket.h"
+#include "estructuras.h"
+#include "../../../lib/sqlite3/sqlite3.h"
+#include "../../db/c/getData.h"
+#include "../../db/c/postData.h"
+#include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream>
+#include "time.h"
 #define MAX 30
-#define _WIN32_WINNT 0x501
-using namespace sockets;
-using namespace std;
+
 void menuInicial(){
 
 	int repite = 1;
@@ -24,7 +19,7 @@ void menuInicial(){
 	do {
     system("cls");
 		printf("\n\t\t\tMENU INICIAL\n");
-		printf("\t\t\t============\n\n");
+		printf("\t\t---------------------------\n\n");
 		printf("\t\t1. Ver Usuarios Registrados\n");
 		printf("\t\t2. Registrar Usuario Nuevo\n");
 		printf("\t\t3. Iniciar Sesion\n");
@@ -34,35 +29,46 @@ void menuInicial(){
 
 		switch (opcion) {
 			case 1:
-       // getListaUsuarios();
-        //menuVerUsuarios();
+       getListaUsuarios();
+       menuVerUsuarios();
         {
+          /*
           Socket *s1 = new Socket();
           char *c = new char[60];
           s1->sendRequest((char *)"Ver Lista de usuarios");
           cin>>c;
           s1->printBuffer();
+          */
         }
         
                     
 			case 2:	
 
       
-        //menuRegistrarUsuario();
+        menuRegistrarUsuario();
 				break;
 			case 3:
 				
-          //inicioSesion();
+          inicioSesion();
 				break;
 			case 0:
-				  
+				system("cls");
+          printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
 				repite = 0;
 				break;
 		}   
 	} while (repite == 1);
-	printf("\nFIN DEL PROGRAMA");
+	
+  
+    printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
 } 
-/*
+
 int comprobarUsuario(char *usuario, char *contrasenya){
 	startConn();
 	
@@ -106,6 +112,7 @@ void inicioSesion(){
 	int intento = 0;
 	char nombreUsuario[20];
 	char password[20];
+  char respuesta[MAX];
 	
 	Usuario *usu;
   usu=(Usuario*)malloc(sizeof(Usuario));
@@ -114,7 +121,7 @@ void inicioSesion(){
 	do {
 		system("cls");
 		printf("\n\t\t\tINGRESAR AL SISTEMA\n");
-		printf("\t\t\t===================\n");
+		printf("\t\t\t----------------------\n");
 		printf("\n\t\tUSUARIO: ");
 		scanf("%s", nombreUsuario);
 		printf("\t\tCLAVE: ");
@@ -127,10 +134,21 @@ void inicioSesion(){
 			menuSeleccionFestival(usu);
 			
 		}else{
-      intento=intento+1;
-      printf("Incorrecto");
-      inicioSesion();
-      break;
+      printf("\n\tUsuario o Password no coinciden. Intentar de nuevo? [S/N]: ");
+		  leerLinea(respuesta, MAX);
+ 
+		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+			intento++;
+		}
+
+    if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
+			system("cls");
+        printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
+		}
+
     }
 		
 	} while (intento < 4 && correcto == 0);
@@ -145,25 +163,38 @@ void menuVerUsuarios()
 	do {	
     
     getListaUsuarios();
+    printf("\n---------------------------\n");
     printf("\t1. Volver. \n"
-         "\t2. Cerrar. \n"
+         "\t2. Cerrar. \n\n"
          "\tIngrese una opcion: [ ]\b\b");
          
     scanf("%d", &input);
     fflush(stdin);
 		switch (input) {
 			case 1:
-       menuInicial();
+       system("cls");
+printf("Volvindo al Menu Inicial...");
+setTimeout(2500);
+system("cls");
+menuInicial();
       case 2:	
-        a=0;
-       	break;
-         
+      system("cls");
+      printf("Cerrando programa...");
+      setTimeout(2500);
+      system("cls");
+      exit(0);         
 			case 0:
 				a = 0;
 		}  
     a=0; 
 	} while (a == 1);
 	printf("\nFIN DEL PROGRAMA");
+  
+  system("cls");
+    printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
 } 
 
 void menuSeleccionFestival(Usuario *u)
@@ -178,8 +209,8 @@ void menuSeleccionFestival(Usuario *u)
 
 do{
       system("cls");
-        printf("\t\t\n---------------------Bienvenido!---------------------------\n"   
-         "\t\tElige un festival : \n"
+        printf("\t\t\n-------------------- Bienvenido, %s! ---------------------------\n\n", u->nom_user); 
+        printf( "\t\tElige un festival : \n\n"
          "\t\t1. Festival JOKINAL SOUND. \n"
          "\t\t2. Festival Tomorrowland.  \n"
          "\t\t3. Festival Vive Latino. \n"
@@ -221,7 +252,11 @@ do{
           break;
         case 6:
           eleccion=1;
-          menuInicial();
+          system("cls");
+printf("Volviendo al Menu Inicial...");
+setTimeout(2500);
+system("cls");
+menuInicial();
           break;
         case 0:
             printf("\n\n\n");
@@ -235,6 +270,7 @@ void menuInfoFestival(Festival *f, Usuario *u)
    int input;
    int eleccion=0;
     do{
+      system("cls");
         printf("Bienvenido al %s\n", f->nom_fest);
         printf(
             "Aqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
@@ -242,7 +278,7 @@ void menuInfoFestival(Festival *f, Usuario *u)
         );
         printf("%s\n", f->info_fest);
         printf(
-            "Selecciona una opcion: \n"
+            "Selecciona una opcion: \n\n"
             "1. Comprar la entrada para el festival\n"
             "2. Consultar otros festivales\n"
             "3. Volver\n\n"
@@ -271,11 +307,12 @@ void menuDentroFestival(Festival *f, Usuario *u)
     int input;
     int eleccion = 0;
     
-    system("cls");
+    
 
     do{
+      system("cls");
         printf(   
-         "1. Ver info festival. \n"
+         "\n1. Ver info festival. \n"
          "2. Ver info entradas.  \n"
          "0. Cerrar.\n\n"
          "\t\tIngrese una opcion: [ ]\b\b");
@@ -293,9 +330,11 @@ void menuDentroFestival(Festival *f, Usuario *u)
           break; 
         case 0:
 
-            printf("\nFin del programa.\n\n");
-            eleccion=1;
-            break;
+          system("cls");
+            printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
         }
       }  while (eleccion==0);
     
@@ -310,19 +349,20 @@ void menuEntradas(Usuario *u)
     Entrada *ent;
     ent=(Entrada*)malloc(sizeof(Entrada));
 
-    system("cls");
+    
 
     do{
+      system("cls");
             printf(   
                
-        	"Elige una entrada : \n"
+        	"Elige una entrada : \n\n"
 			"1. Entrada VIP: \n"
 			"2. Entrada Normal:  \n"
 			"3. Entrada especial Reggaeton:\n"
 			"4. Entrada Total Pack: \nra Raperos:\n"
 			"5. Entrada para traperos:\n"
 			"6. Entrada BackStage:\n"
-			"7. Entrada AllIncluded:\n"
+			"7. Entrada All Included:\n"
       "8. Entrada:\n"
 			"0. Cerrar\n\n"
       
@@ -365,7 +405,11 @@ void menuEntradas(Usuario *u)
           menuComprarEntrada(ent, u);  
           break;
         case 0:
-            printf("\nFin del programa.\n\n");
+          system("cls");
+            printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
             eleccion=1;
             break;
       }
@@ -377,13 +421,14 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
   int input;
   int eleccion=1;
   int elec;
+  char respuesta[MAX];
 
   
   do{
     system("cls");
     printf("\n\nInformacion entrada: %s\n\n", e->info_ent);
     printf("\tPRECIO: %i\n", e->precio);
-    printf("------------------------------------");
+    printf("------------------------------------\n");
     printf("\nQuieres comprar la entrada %s? \n", e->tipo_ent);
  
     printf("1.Si\n2.No\n");
@@ -393,7 +438,20 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
 
     switch(elec){
       case 1:
-        printf("Gracias por la compra");
+        printf("\n\tCompra Exitosa. Quieres comprar otra entrada? [S/N]: ");
+		    leerLinea(respuesta, MAX);
+ 
+		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+			  eleccion = 0;
+		}
+
+        if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
+			system("cls");
+        printf("Cerrando programa...");
+  setTimeout(2500);
+  system("cls");
+  exit(0);
+		}
         break;
       case 2:
         menuEntradas(u);
@@ -445,9 +503,8 @@ int insertarUsuario(Usuario usuario) {
 
 	return result;
 }
-*/
 
-/*int leerLinea(char *cad, int n)
+int leerLinea(char *cad, int n)
 {
 	int i, c;
 
@@ -490,7 +547,7 @@ void menuRegistrarUsuario() {
 	do {
 		system("cls");
 		printf("\n\t\t\tREGISTRAR USUARIO\n");
-		printf("\t\t\t=================\n");
+		printf("\t\t\t--------------------\n\n");
 		printf("\n\tIngrese el nombre de usuario: ");
 		leerLinea(linea, MAX);
 		sscanf(linea, "%s", nombreUsuario);
@@ -511,8 +568,8 @@ void menuRegistrarUsuario() {
 				printf("\nInténtelo mas tarde\n");
 			}
 		} else {
-			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", nombreUsuario);
-			printf("\tNo puede registrar dos usuarios con el mismo nombre de usuario.\n");
+			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
+			printf("\tNo puedes registrar dos usuarios con el mismo nombre de usuario.\n");
 		}
 
 		printf("\n\tDesea seguir registrando usuarios? [S/N]: ");
@@ -522,9 +579,21 @@ void menuRegistrarUsuario() {
 			repite = 0;
 		}
 
+    if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
+			system("cls");
+printf("Volviendo al Menu Inicial...");
+setTimeout(2500);
+system("cls");
+menuInicial();
+		}
+
 	} while (repite == 1);
 
-  menuInicial();
+  system("cls");
+printf("Volviendo al Menu Inicial...");
+setTimeout(2500);
+system("cls");
+menuInicial();
 }
 
 void registrarUsuario(){
@@ -551,7 +620,7 @@ void registrarUsuario(){
         scanf("%s", userName);
         fflush(stdin);
         if(usuarioLibre(userName) == 1){
-            printf("El usuario \"%s\" ya existe, elige otro", userName);
+            printf("El usuario \"%s\" ya existe, elige otro", nombreUsuario);
 
         } else{
             usuarioCorrecto = 1;
@@ -564,7 +633,7 @@ void registrarUsuario(){
 		printf("\t\tElige un buen Password: \n");
 		scanf("%s", password1);
 
-    printf("\t\tVuelve a escribirlo (para gozar x2): \n");
+    printf("\t\tVuelve a escribirlo: \n");
 		scanf("%s", password2);
 
     if(password1 == password2){
@@ -574,6 +643,12 @@ void registrarUsuario(){
 
     printf("\t\tPulsa un numero para continuar [] \n");
 		scanf("%d", end);
+
+    system("cls");
+printf("Volviendo al Menu Inicial...");
+setTimeout(2500);
+system("cls");
+menuInicial();
     }
 
    } while (pi == 0);
@@ -582,7 +657,27 @@ void registrarUsuario(){
 
 }
 
-*/
+//Temporizador en milisegundos
+void setTimeout(int milliseconds)
+{
+    // Si milisegundos es menor o igual a 0 devuelve return con throw error
+    if (milliseconds <= 0) {
+        fprintf(stderr, "Count milliseconds for timeout is less or equal to 0\n");
+        return;
+    }
+
+    // tiempo actual en milisegundos
+    int milliseconds_since = clock() * 1000 / CLOCKS_PER_SEC;
+
+    // tiempo necesario en milisegundos
+    int end = milliseconds_since + milliseconds;
+
+    // esperar a que pase el tiempo
+    do {
+        milliseconds_since = clock() * 1000 / CLOCKS_PER_SEC;
+    } while (milliseconds_since <= end);
+}
+
 
 
 

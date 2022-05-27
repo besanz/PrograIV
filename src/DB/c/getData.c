@@ -95,7 +95,7 @@ Usuario *getUsuario(char *id_user)
     Usuario *usu;
     usu=(Usuario*)malloc(sizeof(Usuario));
 
-    char *sql = "SELECT * FROM Usuario WHERE id_user=?";
+    char *sql = "SELECT * FROM Usuario WHERE nom_user=?";
 
     rc = sqlite3_prepare_v2(db, sql, -1, &res, 0);
 
@@ -130,7 +130,7 @@ Usuario *getUsuario(char *id_user)
     }
 
     return usu;
-    free(usu);
+    
 
 }
 
