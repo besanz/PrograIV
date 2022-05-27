@@ -6,7 +6,7 @@ sqlite3 *db;
 
 int startConn()
 {
-    int rc = sqlite3_open("./BaseDeDatos4 .db", &db);
+    int rc = sqlite3_open("./BaseDeDatos4.db", &db);
 
     if (rc != SQLITE_OK)
     {
