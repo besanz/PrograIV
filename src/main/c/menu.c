@@ -19,8 +19,11 @@ void menuInicial(){
   
   do {
     system("cls");
-    printf("\n\t\t\tMENU INICIAL\n");
-    printf("\t\t---------------------------\n\n");
+    printf("Cargando...");
+    setTimeout(1300);
+    system("cls");
+    printf("\n\t\t\t\tMENU INICIAL\n");
+    printf("\t\t------------------------------------------\n\n");
     printf("\t\t1. Ver Usuarios Registrados\n");
     printf("\t\t2. Registrar Usuario Nuevo\n");
     printf("\t\t3. Iniciar Sesion\n");
@@ -30,26 +33,24 @@ void menuInicial(){
 
     switch (opcion) {
       case 1:
-       getListaUsuarios();
+       system("cls");
+       printf("Cargando lista de usuarios desde la base de datos...");
+       setTimeout(3333);
+       system("cls");
        menuVerUsuarios();
-        {
-          /*
-          Socket *s1 = new Socket();
-          char *c = new char[60];
-          s1->sendRequest((char *)"Ver Lista de usuarios");
-          cin>>c;
-          s1->printBuffer();
-          */
-        }
-        
-                    
+            
       case 2: 
-
-      
+       system("cls");
+       printf("Redirigiendo a registro...");
+       setTimeout(1600);
+       system("cls");
         menuRegistrarUsuario();
         break;
       case 3:
-        
+        system("cls");
+       printf("Redirigiendo a inicio de sesion...");
+       setTimeout(1400);
+       system("cls");
           inicioSesion();
         break;
       case 0:
@@ -142,14 +143,6 @@ void inicioSesion(){
       intento++;
     }
 
-    if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-      system("cls");
-        printf("Cerrando programa...");
-  setTimeout(2500);
-  system("cls");
-  exit(0);
-    }
-
     }
     
   } while (intento < 4 && correcto == 0);
@@ -173,29 +166,32 @@ void menuVerUsuarios()
     fflush(stdin);
     switch (input) {
       case 1:
-       system("cls");
-printf("Volvindo al Menu Inicial...");
-setTimeout(2500);
-system("cls");
-menuInicial();
+        system("cls");
+        printf("Volvindo al Menu Inicial...");
+        setTimeout(2500);
+        system("cls");
+        menuInicial();
+        break;
       case 2: 
-      system("cls");
-      printf("Cerrando programa...");
-      setTimeout(2500);
-      system("cls");
-      exit(0);         
+        system("cls");
+        printf("Cerrando programa...");
+        setTimeout(2000);
+        system("cls");
+        exit(0);   
+        break;      
       case 0:
         a = 0;
+        break;
     }  
-    a=0; 
+    
   } while (a == 1);
   printf("\nFIN DEL PROGRAMA");
   
   system("cls");
-    printf("Cerrando programa...");
-  setTimeout(2500);
-  system("cls");
-  exit(0);
+  //printf("Cerrando programa...");
+  //setTimeout(2500);
+  //system("cls");
+  //exit(0);
 } 
 
 void menuSeleccionFestival(Usuario *u)
@@ -210,43 +206,67 @@ void menuSeleccionFestival(Usuario *u)
 
 do{
       system("cls");
+      printf("Cargando los mejores festivales para ti, %s...", u->nom_user);
+      setTimeout(3500);
+      system("cls");
         printf("\t\t\n-------------------- Bienvenido, %s! ---------------------------\n\n", u->nom_user); 
         printf( "\t\tElige un festival : \n\n"
          "\t\t1. Festival JOKINAL SOUND. \n"
-         "\t\t2. Festival Tomorrowland.  \n"
+         "\t\t2. Festival Tomorrowland \n"
          "\t\t3. Festival Vive Latino. \n"
          "\t\t4. Festival Coachella. \n"
          "\t\t5. Festival Ultra Miami. \n"
          "\t\t6. Volver. \n"
-         "\t\tIngrese una opcion: [ ]\b\b");
+         "\t\t\nIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
         fflush(stdin);
         switch (input)
         {
         case 1:
+      system("cls");
+       printf("Cargando informacion de JOKINAL SOUND...");
+       setTimeout(2300);
+       system("cls");
+
           f = getFestival("JOKINAL SOUND");
           menuDentroFestival(f, u);
           eleccion=1;
           
           break;
         case 2:
+              system("cls");
+       printf("Cargando informacion de Tomorrowland...");
+       setTimeout(2300);
+       system("cls");
            f = getFestival("Tomorrowland");
           menuDentroFestival(f, u);
           eleccion=1;
         
           break; 
         case 3:
+              system("cls");
+       printf("Cargando informacion de Vive Latino...");
+       setTimeout(2300);
+       system("cls");
           f = getFestival("Vive Latino");
           menuDentroFestival(f, u);
           eleccion=1;
           break;
         case 4:
+              system("cls");
+       printf("Cargando informacion de Coachella...");
+       setTimeout(2300);
+       system("cls");
           f = getFestival("Coachella");
           menuDentroFestival(f, u);
           eleccion=1;
           break;
         case 5:
+              system("cls");
+       printf("Cargando informacion de Ultra Miami...");
+       setTimeout(2300);
+       system("cls");
           f = getFestival("Ultra Miami");
           menuDentroFestival(f, u);
           eleccion=1;
@@ -254,10 +274,10 @@ do{
         case 6:
           eleccion=1;
           system("cls");
-printf("Volviendo al Menu Inicial...");
-setTimeout(2500);
-system("cls");
-menuInicial();
+          printf("Volviendo al Menu Inicial...");
+          setTimeout(2500);
+          system("cls");
+          menuInicial();
           break;
         case 0:
             printf("\n\n\n");
@@ -272,6 +292,9 @@ void menuInfoFestival(Festival *f, Usuario *u)
    int eleccion=0;
     do{
       system("cls");
+       printf("Espere por favor...");
+       setTimeout(1500);
+       system("cls");
         printf("Bienvenido al %s\n", f->nom_fest);
         printf(
             "Aqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
@@ -283,19 +306,31 @@ void menuInfoFestival(Festival *f, Usuario *u)
             "1. Comprar la entrada para el festival\n"
             "2. Consultar otros festivales\n"
             "3. Volver\n\n"
-            "\t\tIngrese una opcion: [ ]\b\b"
+            "\t\t\nIngrese una opcion: [ ]\b\b"
         );
         scanf("%d", &input);
         fflush(stdin);
         switch (input)
         {
             case 1:
+                system("cls");
+                printf("Cargando menu de entradas...");
+                setTimeout(1700);
+                system("cls");
                 menuEntradas(u);
                 break;
             case 2:
+                system("cls");
+                printf("Conectando con la base de datos...");
+                setTimeout(2000);
+                system("cls");
                 menuSeleccionFestival(u);
                 break;
             case 3:
+                system("cls");
+                printf("Redirigiendo a %s...", f->nom_fest);
+                setTimeout(2300);
+                system("cls");
                 eleccion=1;
                 menuDentroFestival(f,u);
                 break;
@@ -307,10 +342,14 @@ void menuForo(Usuario *u, Festival *f){
   int index = 0;
   int input;
   do{
+  system("cls");
+    printf("Sera redirigido al foro. Recuerde ser respetuoso...");
+    setTimeout(2300);
+    system("cls");
     system("cls");
     printf("BIENVENIDO AL FORO DEL FESTIVAL %s, %s",f->nom_fest, u->nom_user);
     leerForo();
-    printf("\n1. Escribir en el foro\n2. Actualizar el foro\n0. Salir\n\n[ ]\b\b");
+    printf("\n1. Escribir en el foro\n2. Actualizar el foro\n3. Volver\n0. Salir\n\n[ ]\b\b");
     scanf("%d", &input);
     switch(input){
       case 1:
@@ -319,11 +358,16 @@ void menuForo(Usuario *u, Festival *f){
       case 2:
         leerForo();
         break;
+      case 3:
+        system("cls");
+        printf("Volviendo. Espere un momento por favor...");
+        setTimeout(2121);
+        system("cls");
+        menuSeleccionFestival(u);
+        break;
       case 0:
         menuDentroFestival(f,u); 
         break;
-
-
     }
 
     
@@ -341,11 +385,11 @@ void menuDentroFestival(Festival *f, Usuario *u)
     do{
       system("cls");
         printf(   
-         "\n1. Ver info festival. \n"
-         "2. Ver info entradas.  \n"
-         "3. Acceder al foro del festival. \n"
-         "0. Cerrar.\n\n"
-         "\t\tIngrese una opcion: [ ]\b\b");
+         "1. Ver informacion sobre el festival \n"
+         "2. Ver informacion de las entradas \n"
+         "3. Acceder al foro del festival \n"
+         "0. Cerrar\n\n"
+         "\tIngrese una opcion: [ ]\b\b");
         
         scanf("%d", &input);
         fflush(stdin);
@@ -363,11 +407,11 @@ void menuDentroFestival(Festival *f, Usuario *u)
           break;
         case 0:
 
-          system("cls");
-            printf("Cerrando programa...");
-  setTimeout(2500);
-  system("cls");
-  exit(0);
+        system("cls");
+        printf("Cerrando programa...");
+        setTimeout(2000);
+        system("cls");
+        exit(0);
         }
       }  while (eleccion==0);
     
@@ -385,6 +429,9 @@ void menuEntradas(Usuario *u)
     
 
     do{
+    system("cls");
+    printf("Buscando entradas en la base de datos...");
+    setTimeout(2300);
       system("cls");
             printf(   
                
@@ -392,11 +439,11 @@ void menuEntradas(Usuario *u)
       "1. Entrada VIP: \n"
       "2. Entrada Normal:  \n"
       "3. Entrada especial Reggaeton:\n"
-      "4. Entrada Total Pack: \nra Raperos:\n"
+      "4. Entrada Total Pack: \n"
       "5. Entrada para traperos:\n"
       "6. Entrada BackStage:\n"
       "7. Entrada All Included:\n"
-      "8. Entrada:\n"
+      "8. Entrada:\n\n"
       "0. Cerrar\n\n"
       
          "\t\tIngrese una opcion: [ ]\b\b");
@@ -439,10 +486,10 @@ void menuEntradas(Usuario *u)
           break;
         case 0:
           system("cls");
-            printf("Cerrando programa...");
-  setTimeout(2500);
-  system("cls");
-  exit(0);
+          printf("Cerrando programa...");
+          setTimeout(2500);
+          system("cls");
+          exit(0);
             eleccion=1;
             break;
       }
@@ -459,46 +506,50 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
   
   do{
     system("cls");
+    printf("Reservando las mejores entradas...");
+    setTimeout(1700);
+    system("cls");
     printf("\n\nInformacion entrada: %s\n\n", e->info_ent);
     printf("\tPRECIO: %i\n", e->precio);
     printf("------------------------------------\n");
     printf("\nQuieres comprar la entrada %s? \n", e->tipo_ent);
  
-    printf("1.Si\n2.No\n");
+    printf("\n1. Si\n2. No\n3. Salir \n\n");
     printf("\tIngrese una opcion: [ ]\b\b");
 
     scanf("%i", &elec);
 
     switch(elec){
       case 1:
-        printf("\n\tCompra Exitosa. Quieres comprar otra entrada? [S/N]: ");
-        leerLinea(respuesta, MAX);
- 
-    if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
-        eleccion = 0;
-    }
-
-        if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-      system("cls");
-        printf("Cerrando programa...");
-  setTimeout(2500);
-  system("cls");
-  exit(0);
-    }
+          system("cls");
+        printf("\nGracias por tu compra. Redirigiendo... ");
+        setTimeout(2500);
+        menuSeleccionFestival(u);
         break;
       case 2:
+        system("cls");
+        printf("De acuerdo. Volviendo al menu de entradas...");
+        setTimeout(2500);
+        system("cls");
         menuEntradas(u);
         eleccion=0;
         break;
+        case 3:
+        system("cls");
+        printf("Cerrando programa...");
+        setTimeout(2000);
+        system("cls");
+        exit(0);
     }
     
   }while(eleccion=1);
+          
 }
 
 int insertarUsuario(Usuario usuario) {
   startConn();
   sqlite3_stmt *stmt;
-  char sql[] = "INSERT INTO Usuario(nom_user, pass_user, ent_fest) VALUES ( ?, ?, 1)";
+  char sql[] = "INSERT INTO Usuario(nom_user, pass_user, ent_fest) VALUES (?, ?, 1)";
   
   
   int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
@@ -582,8 +633,7 @@ void menuRegistrarUsuario() {
     printf("\n\t\t\tREGISTRAR USUARIO\n");
     printf("\t\t\t--------------------\n\n");
     printf("\n\tIngrese el nombre de usuario: ");
-    leerLinea(linea, MAX);
-    sscanf(linea, "%s", nombreUsuario);
+    scanf("%s", nombreUsuario);
 
     //Se verifica que el nombre de usuario no exista 
     if (usuarioLibre(nombreUsuario) == 1) {
@@ -601,7 +651,7 @@ void menuRegistrarUsuario() {
         printf("\nInténtelo mas tarde\n");
       }
     } else {
-      printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
+      printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", nombreUsuario);
       printf("\tNo puedes registrar dos usuarios con el mismo nombre de usuario.\n");
     }
 
@@ -611,22 +661,12 @@ void menuRegistrarUsuario() {
     if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
       repite = 0;
     }
-
-    if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-      system("cls");
-printf("Volviendo al Menu Inicial...");
-setTimeout(2500);
-system("cls");
-menuInicial();
-    }
-
   } while (repite == 1);
-
-  system("cls");
-printf("Volviendo al Menu Inicial...");
-setTimeout(2500);
-system("cls");
-menuInicial();
+    system("cls");
+    printf("Volviendo al Menu Inicial...");
+    setTimeout(2500);
+    system("cls");
+    menuInicial();
 }
 
 void registrarUsuario(){
@@ -661,7 +701,6 @@ void registrarUsuario(){
         }
     }
   do{
-
 
     printf("\t\tElige un buen Password: \n");
     scanf("%s", password1);
