@@ -295,10 +295,10 @@ void menuInfoFestival(Festival *f, Usuario *u)
        printf("Espere por favor...");
        setTimeout(1500);
        system("cls");
-        printf("Bienvenido al %s\n", f->nom_fest);
+        printf("Bienvenido al %s!\n", f->nom_fest);
         printf(
-            "Aqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
-            "------------------------------------------------------------------------------\n\n"    
+            "\nAqui encontraras toda la informacion que necesitas saber sobre este festival: \n"
+            "-----------------------------------------------------------------------------------------------------------------------------------------------\n\n"    
         );
         printf("%s\n", f->info_fest);
         printf(
