@@ -15,7 +15,7 @@
 #pragma comment (lib, "Ws2_32.lib")
 // #pragma comment (lib, "Mswsock.lib")
 
-#define DEFAULT_BUFLEN 512
+#define DEFAULT_BUFLEN 1024
 #define DEFAULT_PORT "27015"
 
 using namespace std;
@@ -26,8 +26,8 @@ void interpretar(SOCKET ClientSocket, char *solicitud) {
     */
 
    //Para responder al cliente: send(ClientSocket, respuesta, strlen(respuesta), 0);
-    send(ClientSocket, (char *)"\n\t\t\tMENU INICIAL\nt\t\t============\n\n", strlen((char *)"Solicitud recibida"), 0);
-   cout<<endl;
+    send(ClientSocket, (char *)"palpala", strlen((char *)"palpala"), 0);
+   
 }
 
 int __cdecl main(void) 

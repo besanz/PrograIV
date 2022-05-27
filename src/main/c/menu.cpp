@@ -1,16 +1,20 @@
 extern "C"{
   #include "estructuras.h"
-#include "../../../lib/sqlite3/sqlite3.h"
-#include "../../db/c/getData.h"
-#include "../../db/c/postData.h"
-#include "menu.h"
+  #include "../../../lib/sqlite3/sqlite3.h"
+  #include "../../db/c/getData.h"
+  #include "../../db/c/postData.h"
+  #include "menu.h"
 }
+
+#include "../../proyecto/cliente/Socket.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 #define MAX 30
-
-
+#define _WIN32_WINNT 0x501
+using namespace sockets;
+using namespace std;
 void menuInicial(){
 
 	int repite = 1;
@@ -27,19 +31,28 @@ void menuInicial(){
 		printf("\t\t0. Salir\n\n");
 		printf("\t\tIngrese una opcion: [ ]\b\b");
 		scanf("%i", &opcion);
-    
+
 		switch (opcion) {
 			case 1:
        // getListaUsuarios();
-        menuVerUsuarios();
+        //menuVerUsuarios();
+        {
+          Socket *s1 = new Socket();
+          char *c = new char[60];
+          s1->sendRequest((char *)"Ver Lista de usuarios");
+          cin>>c;
+          s1->printBuffer();
+        }
+        
+                    
 			case 2:	
 
       
-        menuRegistrarUsuario();
+        //menuRegistrarUsuario();
 				break;
 			case 3:
 				
-          inicioSesion();
+          //inicioSesion();
 				break;
 			case 0:
 				  
@@ -49,7 +62,7 @@ void menuInicial(){
 	} while (repite == 1);
 	printf("\nFIN DEL PROGRAMA");
 } 
-
+/*
 int comprobarUsuario(char *usuario, char *contrasenya){
 	startConn();
 	
@@ -432,12 +445,13 @@ int insertarUsuario(Usuario usuario) {
 
 	return result;
 }
+*/
 
-int leerLinea(char *cad, int n)
+/*int leerLinea(char *cad, int n)
 {
 	int i, c;
 
-	/* 1 COMPROBACIÓN DE DATOS INICIALES EN EL BUFFER */
+	//1 COMPROBACIÓN DE DATOS INICIALES EN EL BUFFER 
 	c = getchar();
 	if (c == EOF) {
 		cad[0] = '\0';
@@ -451,14 +465,14 @@ int leerLinea(char *cad, int n)
 		i = 1;
 	}
 
-	/* 2. LECTURA DE LA CADENA */
+	//2. LECTURA DE LA CADENA 
 	for (; i < n - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
 		cad[i] = c;
 	}
 	cad[i] = '\0';
 
-	/*3. LIMPIEZA DEL BUFFER */ 
-	if (c != '\n' && c != EOF) /* es un caracter */
+	//3. LIMPIEZA DEL BUFFER  
+	if (c != '\n' && c != EOF) //es un caracter
 		while ((c = getchar()) != '\n' && c != EOF);
  
 	return 1;
@@ -481,14 +495,14 @@ void menuRegistrarUsuario() {
 		leerLinea(linea, MAX);
 		sscanf(linea, "%s", nombreUsuario);
 
-		/* Se verifica que el nombre de usuario no exista */
+		//Se verifica que el nombre de usuario no exista 
 		if (usuarioLibre(nombreUsuario) == 1) {
 			strcpy(usuario.nom_user, nombreUsuario);
 
 			printf("\tIngrese la clave: ");
 			leerLinea(usuario.pass_user, MAX);
 
-			/* Se inserta el usuario en la bd */
+			//Se inserta el usuario en la bd 
 			if (insertarUsuario(usuario)==SQLITE_OK) {
 				printf("\n\tEl usuario fue registrado satisfactoriamente!\n");
 
@@ -568,8 +582,7 @@ void registrarUsuario(){
 
 }
 
-
-
+*/
 
 
 

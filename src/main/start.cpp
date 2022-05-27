@@ -4,7 +4,8 @@ extern "C"{
 }
 
 
-void main(){
+int main(void){
     startConn();
     menuInicial();
+    return 0;
 }
