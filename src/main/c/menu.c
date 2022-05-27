@@ -1,4 +1,4 @@
-
+#include "foro.h"
 #include "estructuras.h"
 #include "../../../lib/sqlite3/sqlite3.h"
 #include "../../db/c/getData.h"
@@ -9,26 +9,27 @@
 #include <string.h>
 #include "time.h"
 #define MAX 30
+#define LONGITUD_MAXIMA_CADENA 1000
 
 void menuInicial(){
 
-	int repite = 1;
-	int opcion;
+  int repite = 1;
+  int opcion;
 
-	
-	do {
+  
+  do {
     system("cls");
-		printf("\n\t\t\tMENU INICIAL\n");
-		printf("\t\t---------------------------\n\n");
-		printf("\t\t1. Ver Usuarios Registrados\n");
-		printf("\t\t2. Registrar Usuario Nuevo\n");
-		printf("\t\t3. Iniciar Sesion\n");
-		printf("\t\t0. Salir\n\n");
-		printf("\t\tIngrese una opcion: [ ]\b\b");
-		scanf("%i", &opcion);
+    printf("\n\t\t\tMENU INICIAL\n");
+    printf("\t\t---------------------------\n\n");
+    printf("\t\t1. Ver Usuarios Registrados\n");
+    printf("\t\t2. Registrar Usuario Nuevo\n");
+    printf("\t\t3. Iniciar Sesion\n");
+    printf("\t\t0. Salir\n\n");
+    printf("\t\tIngrese una opcion: [ ]\b\b");
+    scanf("%i", &opcion);
 
-		switch (opcion) {
-			case 1:
+    switch (opcion) {
+      case 1:
        getListaUsuarios();
        menuVerUsuarios();
         {
@@ -42,26 +43,26 @@ void menuInicial(){
         }
         
                     
-			case 2:	
+      case 2: 
 
       
         menuRegistrarUsuario();
-				break;
-			case 3:
-				
+        break;
+      case 3:
+        
           inicioSesion();
-				break;
-			case 0:
-				system("cls");
+        break;
+      case 0:
+        system("cls");
           printf("Cerrando programa...");
   setTimeout(2500);
   system("cls");
   exit(0);
-				repite = 0;
-				break;
-		}   
-	} while (repite == 1);
-	
+        repite = 0;
+        break;
+    }   
+  } while (repite == 1);
+  
   
     printf("Cerrando programa...");
   setTimeout(2500);
@@ -70,88 +71,88 @@ void menuInicial(){
 } 
 
 int comprobarUsuario(char *usuario, char *contrasenya){
-	startConn();
-	
+  startConn();
+  
 
 char sql[] = "SELECT nom_user, pass_user FROM Usuario WHERE nom_user = ?";
     sqlite3_stmt *stmt;
-	int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+  int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return result;
-	} else {
+  if (result != SQLITE_OK) {
+    printf("Error preparing statement (SELECT)\n");
+    printf("%s\n", sqlite3_errmsg(db));
+    return result;
+  } else {
     sqlite3_bind_text(stmt, 1, usuario, (-1), SQLITE_STATIC);
   }
 
-	int usuarioValido = 0;
-	do {
-		result = sqlite3_step(stmt) ;
-		if (result == SQLITE_ROW) {
-			if(strcmp(usuario, (const char*)sqlite3_column_text(stmt,0)) == 0 &&
-			strcmp(contrasenya,(const char*)sqlite3_column_text(stmt,1)) == 0){
-				usuarioValido = 1;
-				break;
-			}
+  int usuarioValido = 0;
+  do {
+    result = sqlite3_step(stmt) ;
+    if (result == SQLITE_ROW) {
+      if(strcmp(usuario, (const char*)sqlite3_column_text(stmt,0)) == 0 &&
+      strcmp(contrasenya,(const char*)sqlite3_column_text(stmt,1)) == 0){
+        usuarioValido = 1;
+        break;
+      }
 
-		}
-	} while (result == SQLITE_ROW);
+    }
+  } while (result == SQLITE_ROW);
 
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (SELECT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return result;
-	}
-	return usuarioValido;
+  result = sqlite3_finalize(stmt);
+  if (result != SQLITE_OK) {
+    printf("Error finalizing statement (SELECT)\n");
+    printf("%s\n", sqlite3_errmsg(db));
+    return result;
+  }
+  return usuarioValido;
 }
 void inicioSesion(){
 
-	int correcto = 0;
-	int intento = 0;
-	char nombreUsuario[20];
-	char password[20];
+  int correcto = 0;
+  int intento = 0;
+  char nombreUsuario[20];
+  char password[20];
   char respuesta[MAX];
-	
-	Usuario *usu;
+  
+  Usuario *usu;
   usu=(Usuario*)malloc(sizeof(Usuario));
 
 
-	do {
-		system("cls");
-		printf("\n\t\t\tINGRESAR AL SISTEMA\n");
-		printf("\t\t\t----------------------\n");
-		printf("\n\t\tUSUARIO: ");
-		scanf("%s", nombreUsuario);
-		printf("\t\tCLAVE: ");
-		scanf("%s", password);
+  do {
+    system("cls");
+    printf("\n\t\t\tINGRESAR AL SISTEMA\n");
+    printf("\t\t\t----------------------\n");
+    printf("\n\t\tUSUARIO: ");
+    scanf("%s", nombreUsuario);
+    printf("\t\tCLAVE: ");
+    scanf("%s", password);
 
-		usu = getUsuario(nombreUsuario);
-		
-		if(comprobarUsuario(nombreUsuario, password) == 1){
+    usu = getUsuario(nombreUsuario);
+    
+    if(comprobarUsuario(nombreUsuario, password) == 1){
 
-			menuSeleccionFestival(usu);
-			
-		}else{
+      menuSeleccionFestival(usu);
+      
+    }else{
       printf("\n\tUsuario o Password no coinciden. Intentar de nuevo? [S/N]: ");
-		  leerLinea(respuesta, MAX);
+      leerLinea(respuesta, MAX);
  
-		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
-			intento++;
-		}
+    if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+      intento++;
+    }
 
     if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-			system("cls");
+      system("cls");
         printf("Cerrando programa...");
   setTimeout(2500);
   system("cls");
   exit(0);
-		}
+    }
 
     }
-		
-	} while (intento < 4 && correcto == 0);
+    
+  } while (intento < 4 && correcto == 0);
 
 }
 
@@ -160,7 +161,7 @@ void menuVerUsuarios()
   int a=1;
   int input;
 
-	do {	
+  do {  
     
     getListaUsuarios();
     printf("\n---------------------------\n");
@@ -170,25 +171,25 @@ void menuVerUsuarios()
          
     scanf("%d", &input);
     fflush(stdin);
-		switch (input) {
-			case 1:
+    switch (input) {
+      case 1:
        system("cls");
 printf("Volvindo al Menu Inicial...");
 setTimeout(2500);
 system("cls");
 menuInicial();
-      case 2:	
+      case 2: 
       system("cls");
       printf("Cerrando programa...");
       setTimeout(2500);
       system("cls");
       exit(0);         
-			case 0:
-				a = 0;
-		}  
+      case 0:
+        a = 0;
+    }  
     a=0; 
-	} while (a == 1);
-	printf("\nFIN DEL PROGRAMA");
+  } while (a == 1);
+  printf("\nFIN DEL PROGRAMA");
   
   system("cls");
     printf("Cerrando programa...");
@@ -225,30 +226,30 @@ do{
         {
         case 1:
           f = getFestival("JOKINAL SOUND");
-        	menuDentroFestival(f, u);
-        	eleccion=1;
+          menuDentroFestival(f, u);
+          eleccion=1;
           
           break;
         case 2:
            f = getFestival("Tomorrowland");
-        	menuDentroFestival(f, u);
-        	eleccion=1;
+          menuDentroFestival(f, u);
+          eleccion=1;
         
           break; 
         case 3:
           f = getFestival("Vive Latino");
-        	menuDentroFestival(f, u);
-        	eleccion=1;
+          menuDentroFestival(f, u);
+          eleccion=1;
           break;
         case 4:
           f = getFestival("Coachella");
-        	menuDentroFestival(f, u);
-        	eleccion=1;
+          menuDentroFestival(f, u);
+          eleccion=1;
           break;
         case 5:
           f = getFestival("Ultra Miami");
-        	menuDentroFestival(f, u);
-        	eleccion=1;
+          menuDentroFestival(f, u);
+          eleccion=1;
           break;
         case 6:
           eleccion=1;
@@ -302,6 +303,34 @@ void menuInfoFestival(Festival *f, Usuario *u)
         }
     }while(eleccion==0);
 }
+void menuForo(Usuario *u, Festival *f){
+  int index = 0;
+  int input;
+  do{
+    system("cls");
+    printf("BIENVENIDO AL FORO DEL FESTIVAL %s, %s",f->nom_fest, u->nom_user);
+    leerForo();
+    printf("\n1. Escribir en el foro\n2. Actualizar el foro\n0. Salir\n\n[ ]\b\b");
+    scanf("%d", &input);
+    switch(input){
+      case 1:
+        escribirForo();
+        break;
+      case 2:
+        leerForo();
+        break;
+      case 0:
+        menuDentroFestival(f,u); 
+        break;
+
+
+    }
+
+    
+
+  }while(index==0);
+  
+}
 void menuDentroFestival(Festival *f, Usuario *u)
 {
     int input;
@@ -314,6 +343,7 @@ void menuDentroFestival(Festival *f, Usuario *u)
         printf(   
          "\n1. Ver info festival. \n"
          "2. Ver info entradas.  \n"
+         "3. Acceder al foro del festival. \n"
          "0. Cerrar.\n\n"
          "\t\tIngrese una opcion: [ ]\b\b");
         
@@ -328,6 +358,9 @@ void menuDentroFestival(Festival *f, Usuario *u)
           menuEntradas(u);
         
           break; 
+        case 3:
+          menuForo(u, f);
+          break;
         case 0:
 
           system("cls");
@@ -355,16 +388,16 @@ void menuEntradas(Usuario *u)
       system("cls");
             printf(   
                
-        	"Elige una entrada : \n\n"
-			"1. Entrada VIP: \n"
-			"2. Entrada Normal:  \n"
-			"3. Entrada especial Reggaeton:\n"
-			"4. Entrada Total Pack: \nra Raperos:\n"
-			"5. Entrada para traperos:\n"
-			"6. Entrada BackStage:\n"
-			"7. Entrada All Included:\n"
+          "Elige una entrada : \n\n"
+      "1. Entrada VIP: \n"
+      "2. Entrada Normal:  \n"
+      "3. Entrada especial Reggaeton:\n"
+      "4. Entrada Total Pack: \nra Raperos:\n"
+      "5. Entrada para traperos:\n"
+      "6. Entrada BackStage:\n"
+      "7. Entrada All Included:\n"
       "8. Entrada:\n"
-			"0. Cerrar\n\n"
+      "0. Cerrar\n\n"
       
          "\t\tIngrese una opcion: [ ]\b\b");
         
@@ -380,23 +413,23 @@ void menuEntradas(Usuario *u)
           ent = getinfoEnt(2);
           menuComprarEntrada(ent, u);
           break; 
-		    case 3:        
+        case 3:        
           ent = getinfoEnt(3); 
           menuComprarEntrada(ent, u);
           break; 
-		    case 4:
+        case 4:
           ent = getinfoEnt(4);
           menuComprarEntrada(ent, u);
           break; 
-		    case 5:
+        case 5:
           ent = getinfoEnt(5);
           menuComprarEntrada(ent, u);
           break; 
-		    case 6: 
+        case 6: 
           ent = getinfoEnt(6);
           menuComprarEntrada(ent, u);        
           break; 
-		    case 7:
+        case 7:
           ent = getinfoEnt(7);
           menuComprarEntrada(ent, u);
           break; 
@@ -439,19 +472,19 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
     switch(elec){
       case 1:
         printf("\n\tCompra Exitosa. Quieres comprar otra entrada? [S/N]: ");
-		    leerLinea(respuesta, MAX);
+        leerLinea(respuesta, MAX);
  
-		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
-			  eleccion = 0;
-		}
+    if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+        eleccion = 0;
+    }
 
         if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-			system("cls");
+      system("cls");
         printf("Cerrando programa...");
   setTimeout(2500);
   system("cls");
   exit(0);
-		}
+    }
         break;
       case 2:
         menuEntradas(u);
@@ -463,131 +496,131 @@ void menuComprarEntrada(Entrada *e, Usuario *u){
 }
 
 int insertarUsuario(Usuario usuario) {
-	startConn();
+  startConn();
   sqlite3_stmt *stmt;
-	char sql[] = "INSERT INTO Usuario(nom_user, pass_user, ent_fest) VALUES ( ?, ?, 1)";
-	
+  char sql[] = "INSERT INTO Usuario(nom_user, pass_user, ent_fest) VALUES ( ?, ?, 1)";
+  
   
   int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement (INSERT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return result;
-	}
+  if (result != SQLITE_OK) {
+    printf("Error preparing statement (INSERT)\n");
+    printf("%s\n", sqlite3_errmsg(db));
+    return result;
+  }
 
-	sqlite3_bind_text(stmt, 1, usuario.nom_user, -1, SQLITE_STATIC);
-	sqlite3_bind_text(stmt, 2, usuario.pass_user, -1, SQLITE_STATIC);
-
-  
-	if (result != SQLITE_OK) {
-		printf("Error binding parameters\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return result;
-	}
-
-	result = sqlite3_step(stmt);
+  sqlite3_bind_text(stmt, 1, usuario.nom_user, -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 2, usuario.pass_user, -1, SQLITE_STATIC);
 
   
-	if (result != SQLITE_DONE) {
-		printf("Error inserting new data\n");
-		return result;
-	}
+  if (result != SQLITE_OK) {
+    printf("Error binding parameters\n");
+    printf("%s\n", sqlite3_errmsg(db));
+    return result;
+  }
 
-	result = sqlite3_finalize(stmt);
-	if (result != SQLITE_OK) {
-		printf("Error finalizing statement (INSERT)\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return result;
-	}
+  result = sqlite3_step(stmt);
+
+  
+  if (result != SQLITE_DONE) {
+    printf("Error inserting new data\n");
+    return result;
+  }
+
+  result = sqlite3_finalize(stmt);
+  if (result != SQLITE_OK) {
+    printf("Error finalizing statement (INSERT)\n");
+    printf("%s\n", sqlite3_errmsg(db));
+    return result;
+  }
   
 
-	return result;
+  return result;
 }
 
 int leerLinea(char *cad, int n)
 {
-	int i, c;
+  int i, c;
 
-	//1 COMPROBACIÓN DE DATOS INICIALES EN EL BUFFER 
-	c = getchar();
-	if (c == EOF) {
-		cad[0] = '\0';
-		return 0;
-	}
+  //1 COMPROBACIÓN DE DATOS INICIALES EN EL BUFFER 
+  c = getchar();
+  if (c == EOF) {
+    cad[0] = '\0';
+    return 0;
+  }
 
-	if (c == '\n') {
-		i = 0;
-	} else {
-		cad[0] = c;
-		i = 1;
-	}
+  if (c == '\n') {
+    i = 0;
+  } else {
+    cad[0] = c;
+    i = 1;
+  }
 
-	//2. LECTURA DE LA CADENA 
-	for (; i < n - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
-		cad[i] = c;
-	}
-	cad[i] = '\0';
+  //2. LECTURA DE LA CADENA 
+  for (; i < n - 1 && (c = getchar()) != EOF && c != '\n'; i++) {
+    cad[i] = c;
+  }
+  cad[i] = '\0';
 
-	//3. LIMPIEZA DEL BUFFER  
-	if (c != '\n' && c != EOF) //es un caracter
-		while ((c = getchar()) != '\n' && c != EOF);
+  //3. LIMPIEZA DEL BUFFER  
+  if (c != '\n' && c != EOF) //es un caracter
+    while ((c = getchar()) != '\n' && c != EOF);
  
-	return 1;
+  return 1;
 }
  
 void menuRegistrarUsuario() {
-	Usuario usuario;
+  Usuario usuario;
   usuario.nom_user = (char*)malloc(MAX*sizeof(char));
   usuario.pass_user = (char*)malloc(MAX*sizeof(char));
-	char nombreUsuario[MAX];
-	char respuesta[MAX];
-	char repite = 1;
+  char nombreUsuario[MAX];
+  char respuesta[MAX];
+  char repite = 1;
   char linea[MAX];
-	
-	do {
-		system("cls");
-		printf("\n\t\t\tREGISTRAR USUARIO\n");
-		printf("\t\t\t--------------------\n\n");
-		printf("\n\tIngrese el nombre de usuario: ");
-		leerLinea(linea, MAX);
-		sscanf(linea, "%s", nombreUsuario);
+  
+  do {
+    system("cls");
+    printf("\n\t\t\tREGISTRAR USUARIO\n");
+    printf("\t\t\t--------------------\n\n");
+    printf("\n\tIngrese el nombre de usuario: ");
+    leerLinea(linea, MAX);
+    sscanf(linea, "%s", nombreUsuario);
 
-		//Se verifica que el nombre de usuario no exista 
-		if (usuarioLibre(nombreUsuario) == 1) {
-			strcpy(usuario.nom_user, nombreUsuario);
+    //Se verifica que el nombre de usuario no exista 
+    if (usuarioLibre(nombreUsuario) == 1) {
+      strcpy(usuario.nom_user, nombreUsuario);
 
-			printf("\tIngrese la clave: ");
-			leerLinea(usuario.pass_user, MAX);
+      printf("\tIngrese la clave: ");
+      leerLinea(usuario.pass_user, MAX);
 
-			//Se inserta el usuario en la bd 
-			if (insertarUsuario(usuario)==SQLITE_OK) {
-				printf("\n\tEl usuario fue registrado satisfactoriamente!\n");
+      //Se inserta el usuario en la bd 
+      if (insertarUsuario(usuario)==SQLITE_OK) {
+        printf("\n\tEl usuario fue registrado satisfactoriamente!\n");
 
-			} else {
-				printf("\n\tOcurrio un error al registrar el usuario\n");
-				printf("\nInténtelo mas tarde\n");
-			}
-		} else {
-			printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
-			printf("\tNo puedes registrar dos usuarios con el mismo nombre de usuario.\n");
-		}
+      } else {
+        printf("\n\tOcurrio un error al registrar el usuario\n");
+        printf("\nInténtelo mas tarde\n");
+      }
+    } else {
+      printf("\n\tEl usuario \"%s\" ya ha sido registrado previamente\n", usuario.nom_user);
+      printf("\tNo puedes registrar dos usuarios con el mismo nombre de usuario.\n");
+    }
 
-		printf("\n\tDesea seguir registrando usuarios? [S/N]: ");
-		leerLinea(respuesta, MAX);
+    printf("\n\tDesea seguir registrando usuarios? [S/N]: ");
+    leerLinea(respuesta, MAX);
  
-		if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
-			repite = 0;
-		}
+    if (!(strcmp(respuesta, "S") == 0 || strcmp(respuesta, "s") == 0)) {
+      repite = 0;
+    }
 
     if (!(strcmp(respuesta, "N") == 0 || strcmp(respuesta, "n") == 0)) {
-			system("cls");
+      system("cls");
 printf("Volviendo al Menu Inicial...");
 setTimeout(2500);
 system("cls");
 menuInicial();
-		}
+    }
 
-	} while (repite == 1);
+  } while (repite == 1);
 
   system("cls");
 printf("Volviendo al Menu Inicial...");
@@ -598,21 +631,21 @@ menuInicial();
 
 void registrarUsuario(){
 
-	int end, pi = 0;
-	char nombreUsuario[MAX];
-	char password1[MAX];
+  int end, pi = 0;
+  char nombreUsuario[MAX];
+  char password1[MAX];
   char password2[MAX];
-	
-	Usuario *usuario;
+  
+  Usuario *usuario;
   usuario=(Usuario*)malloc(sizeof(Usuario));
 
 
-	do {
-		system("cls");
-		printf("\n\t\t\tREGISTRARSE AL SISTEMA\n");
-		printf("\t\t\t-------------------------\n");
-		printf("\n\t\tElige un nombre de Usuario: ");
-		scanf("%s", nombreUsuario);
+  do {
+    system("cls");
+    printf("\n\t\t\tREGISTRARSE AL SISTEMA\n");
+    printf("\t\t\t-------------------------\n");
+    printf("\n\t\tElige un nombre de Usuario: ");
+    scanf("%s", nombreUsuario);
 
     int usuarioCorrecto = 0;
     while(!usuarioCorrecto){
@@ -630,11 +663,11 @@ void registrarUsuario(){
   do{
 
 
-		printf("\t\tElige un buen Password: \n");
-		scanf("%s", password1);
+    printf("\t\tElige un buen Password: \n");
+    scanf("%s", password1);
 
     printf("\t\tVuelve a escribirlo: \n");
-		scanf("%s", password2);
+    scanf("%s", password2);
 
     if(password1 == password2){
       strcpy(usuario->pass_user, password1);
@@ -642,7 +675,7 @@ void registrarUsuario(){
       pi=1;
 
     printf("\t\tPulsa un numero para continuar [] \n");
-		scanf("%d", end);
+    scanf("%d", end);
 
     system("cls");
 printf("Volviendo al Menu Inicial...");
@@ -653,7 +686,7 @@ menuInicial();
 
    } while (pi == 0);
 
-	} while (end == 0);
+  } while (end == 0);
 
 }
 
@@ -677,6 +710,59 @@ void setTimeout(int milliseconds)
         milliseconds_since = clock() * 1000 / CLOCKS_PER_SEC;
     } while (milliseconds_since <= end);
 }
+int longitud(char *p){
+    int c=0;
+    while(*p!='\0')
+    {
+        c++;
+        *p++;
+    }
+    return(c);
+}
+
+void leerForo(){
+  char a[1000];
+  char bufer[LONGITUD_MAXIMA_CADENA];
+    FILE *f;
+    f = fopen("foro.txt", "r");
+    while (fgets(bufer, LONGITUD_MAXIMA_CADENA, f))
+    {
+        while( fscanf(f, "%[^\n]", &a) == 1)
+    {
+        printf("%s", a);
+    }
+    printf("\n"); 
+    }
+    fclose(f);
+
+
+}
+void escribirForo(){
+    int x;
+    char texto[100];
+    FILE *f;
+    f = fopen("foro.txt", "a");
+    printf("Escribe un mensaje de maximo 30 caracteres: ");
+
+    scanf("%30[^\n]", texto);
+
+    x = longitud(texto);
+    if(x<31){
+      fprintf(f, "%s\n", texto);
+   
+    fclose(f);
+
+    printf("\nMensaje insertado con exito\n");
+
+    }else{
+      printf("\nSu mensaje supera los 30 caracteres.\n");
+    }
+
+    
+
+
+}
+
 
 
 
